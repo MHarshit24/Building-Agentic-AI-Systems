@@ -1,0 +1,1710 @@
+{
+  "gq_001": {
+    "confidence_score": 0.9019354838709677,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.627469235954854,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Redirect the user to the OAuth authorization URL.",
+        "The OAuth authorization URL is retrieved using GET /oauth/authorize with client_id/response_type=code/redirect_uri.",
+        "The returned authorization code is exchanged for an access token via POST /oauth/token.",
+        "The grant type for exchanging the authorization code for an access token is authorization_code."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Redirect the user to the OAuth authorization URL.",
+          "confirmed": true
+        },
+        {
+          "fact": "The OAuth authorization URL is retrieved using GET /oauth/authorize with client_id/response_type=code/redirect_uri.",
+          "confirmed": false
+        },
+        {
+          "fact": "The returned authorization code is exchanged for an access token via POST /oauth/token.",
+          "confirmed": true
+        },
+        {
+          "fact": "The grant type for exchanging the authorization code for an access token is authorization_code.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_002": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6042858513035648,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "The response time commitment for a Critical severity ticket under the Priority SLA tier is 30 minutes."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "The response time commitment for a Critical severity ticket under the Priority SLA tier is 30 minutes.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_003": {
+    "confidence_score": 0.9030952380952382,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8283034308031705,
+      "context_precision": 0.4,
+      "context_recall": 0.5
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Use pagination and field filtering to reduce payload size.",
+        "Leverage ETags for conditional requests.",
+        "Choose the nearest regional endpoint."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Use pagination and field filtering to reduce payload size.",
+          "confirmed": false
+        },
+        {
+          "fact": "Leverage ETags for conditional requests.",
+          "confirmed": true
+        },
+        {
+          "fact": "Choose the nearest regional endpoint.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_004": {
+    "confidence_score": null,
+    "retrieval_mode": null,
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.18107098850490408,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "MTTA (Mean Time To Acknowledge) measures detection-to-assignment.",
+        "MTTR (Mean Time To Resolve) measures detection-to-resolution.",
+        "MTTA has a target of less than 15 minutes for P0 and less than 1 hour for P1.",
+        "MTTR has a target of less than 4 hours for P0 and less than 24 hours for P1."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "MTTA (Mean Time To Acknowledge) measures detection-to-assignment.",
+          "confirmed": false
+        },
+        {
+          "fact": "MTTR (Mean Time To Resolve) measures detection-to-resolution.",
+          "confirmed": false
+        },
+        {
+          "fact": "MTTA has a target of less than 15 minutes for P0 and less than 1 hour for P1.",
+          "confirmed": false
+        },
+        {
+          "fact": "MTTR has a target of less than 4 hours for P0 and less than 24 hours for P1.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_005": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8127064488720616,
+      "context_precision": 1.0,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Priority is determined from a 3x3 urgency x impact matrix",
+        "High urgency + High impact = P0 (Critical)",
+        "Low urgency + Low impact = P3 (Low)",
+        "Medium urgency + High impact = P1"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Priority is determined from a 3x3 urgency x impact matrix",
+          "confirmed": true
+        },
+        {
+          "fact": "High urgency + High impact = P0 (Critical)",
+          "confirmed": true
+        },
+        {
+          "fact": "Low urgency + Low impact = P3 (Low)",
+          "confirmed": true
+        },
+        {
+          "fact": "Medium urgency + High impact = P1",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_006": {
+    "confidence_score": 0.9209016393442622,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.8,
+      "answer_relevance": 0.6965363628852178,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Ubuntu 20.04/22.04 LTS is fully supported for installing the product.",
+        "CentOS 8.x/9.x is fully supported for installing the product.",
+        "Red Hat Enterprise Linux 8.x/9.x is fully supported for installing the product.",
+        "Debian 11/12 is supported for installing the product.",
+        "Amazon Linux 2023 has community support for installing the product.",
+        "Windows Server 2019/2022 has limited support for installing the product."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Ubuntu 20.04/22.04 LTS is fully supported for installing the product.",
+          "confirmed": true
+        },
+        {
+          "fact": "CentOS 8.x/9.x is fully supported for installing the product.",
+          "confirmed": true
+        },
+        {
+          "fact": "Red Hat Enterprise Linux 8.x/9.x is fully supported for installing the product.",
+          "confirmed": true
+        },
+        {
+          "fact": "Debian 11/12 is supported for installing the product.",
+          "confirmed": false
+        },
+        {
+          "fact": "Amazon Linux 2023 has community support for installing the product.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_007": {
+    "confidence_score": 0.9209016393442622,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6992046419771086,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "The API rate limit for the Free tier is 60 requests per minute.",
+        "The API rate limit for the Free tier is 10,000 requests per day.",
+        "The API rate limit for the Free tier has a burst limit of 100 requests per 10 seconds."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "The API rate limit for the Free tier is 60 requests per minute.",
+          "confirmed": true
+        },
+        {
+          "fact": "The API rate limit for the Free tier is 10,000 requests per day.",
+          "confirmed": true
+        },
+        {
+          "fact": "The API rate limit for the Free tier has a burst limit of 100 requests per 10 seconds.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_008": {
+    "confidence_score": 0.9169354838709678,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6967408548125662,
+      "context_precision": 1.0,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "A 429 error means the rate limit was exceeded.",
+        "The client should wait 60 seconds and implement exponential backoff before retrying."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A 429 error means the rate limit was exceeded.",
+          "confirmed": true
+        },
+        {
+          "fact": "The client should wait 60 seconds and implement exponential backoff before retrying.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_009": {
+    "confidence_score": 0.5459016393442623,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": true,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.696027666380603,
+      "context_precision": 0.6,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "For Critical severity, patch development is within 4 hours.",
+        "For Critical severity, testing is within 2 hours.",
+        "For Critical severity, deployment is within 2 hours.",
+        "The total SLA for Critical severity is 8 hours."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "For Critical severity, patch development is within 4 hours.",
+          "confirmed": true
+        },
+        {
+          "fact": "For Critical severity, testing is within 2 hours.",
+          "confirmed": true
+        },
+        {
+          "fact": "For Critical severity, deployment is within 2 hours.",
+          "confirmed": true
+        },
+        {
+          "fact": "The total SLA for Critical severity is 8 hours.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_010": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8312004216262099,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "A 401 authentication error from the API can be due to Missing Auth.",
+        "Missing Auth can be resolved by including an X-API-Key header or Bearer token.",
+        "Invalid Key can be resolved by generating a new API key from the dashboard.",
+        "Token Expired can be resolved by refreshing the token or re-authenticating."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A 401 authentication error from the API can be due to Missing Auth.",
+          "confirmed": true
+        },
+        {
+          "fact": "Missing Auth can be resolved by including an X-API-Key header or Bearer token.",
+          "confirmed": true
+        },
+        {
+          "fact": "Invalid Key can be resolved by generating a new API key from the dashboard.",
+          "confirmed": true
+        },
+        {
+          "fact": "Token Expired can be resolved by refreshing the token or re-authenticating.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_011": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": true,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7951205026718006,
+      "context_precision": 0.6,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Report security vulnerabilities via security@example.com (PGP key available) or the bug bounty program",
+        "Initial acknowledgment of reported vulnerabilities is provided within 24 hours",
+        "Progress updates for reported vulnerabilities are provided every 5 business days"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Report security vulnerabilities via security@example.com (PGP key available) or the bug bounty program",
+          "confirmed": true
+        },
+        {
+          "fact": "Initial acknowledgment of reported vulnerabilities is provided within 24 hours",
+          "confirmed": true
+        },
+        {
+          "fact": "Progress updates for reported vulnerabilities are provided every 5 business days",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_012": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 0.8,
+      "answer_relevance": 0.6996399471242222,
+      "context_precision": 0.4,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "4xx client errors escalate to the community forum or developer support",
+        "rate-limiting quota issues escalate to sales@example.com",
+        "5xx server errors escalate to support@example.com",
+        "auth issues escalate to billing@example.com or support",
+        "revenue-impacting outages escalate to the Enterprise-only emergency hotline"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "4xx client errors escalate to the community forum or developer support",
+          "confirmed": true
+        },
+        {
+          "fact": "rate-limiting quota issues escalate to sales@example.com",
+          "confirmed": true
+        },
+        {
+          "fact": "5xx server errors escalate to support@example.com",
+          "confirmed": true
+        },
+        {
+          "fact": "auth issues escalate to billing@example.com or support",
+          "confirmed": true
+        },
+        {
+          "fact": "revenue-impacting outages escalate to the Enterprise-only emergency hotline",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_013": {
+    "confidence_score": 0.9209016393442622,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8424503621102454,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "PostgreSQL 14.x or 15.x is required for product version 3.5.x",
+        "Redis 7.0+ is required for product version 3.5.x"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "PostgreSQL 14.x or 15.x is required for product version 3.5.x",
+          "confirmed": true
+        },
+        {
+          "fact": "Redis 7.0+ is required for product version 3.5.x",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_014": {
+    "confidence_score": 0.9209016393442622,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8463121244531969,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "User impact over 100 users qualifies an incident as a Major Incident.",
+        "25% of the user base impacted qualifies an incident as a Major Incident.",
+        "A critical business function being unavailable qualifies an incident as a Major Incident.",
+        "Financial impact over $50,000/hour qualifies an incident as a Major Incident.",
+        "An outage over 4 hours for a critical service qualifies an incident as a Major Incident.",
+        "A confirmed data breach/security incident qualifies an incident as a Major Incident.",
+        "A regulatory/SLA compliance violation qualifies an incident as a Major Incident."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "User impact over 100 users qualifies an incident as a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "25% of the user base impacted qualifies an incident as a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "A critical business function being unavailable qualifies an incident as a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "An outage over 4 hours for a critical service qualifies an incident as a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "A confirmed data breach/security incident qualifies an incident as a Major Incident.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_015": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6059123318425301,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "A Basic-tier customer waits 48 hours for first response on a Low severity ticket."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A Basic-tier customer waits 48 hours for first response on a Low severity ticket.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_016": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 0.8,
+      "answer_relevance": 0.7243451171870339,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Starter data includes ticket_id=3",
+        "ticket_id=3 has Critical severity",
+        "ticket_id=3 is for Alpha Corp",
+        "ticket_id=3 is related to Security",
+        "ticket_id=3 has a status of Escalated"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Starter data includes ticket_id=3",
+          "confirmed": false
+        },
+        {
+          "fact": "ticket_id=3 has Critical severity",
+          "confirmed": true
+        },
+        {
+          "fact": "ticket_id=3 is for Alpha Corp",
+          "confirmed": false
+        },
+        {
+          "fact": "ticket_id=3 is related to Security",
+          "confirmed": true
+        },
+        {
+          "fact": "ticket_id=3 has a status of Escalated",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_017": {
+    "confidence_score": 0.95,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.3145401582592308,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Alpha Corp is on sla_level='Priority'",
+        "Delta Logistics is on sla_level='Priority'"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Alpha Corp is on sla_level='Priority'",
+          "confirmed": true
+        },
+        {
+          "fact": "Delta Logistics is on sla_level='Priority'",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_018": {
+    "confidence_score": 0.3459016393442623,
+    "retrieval_mode": "SQL",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.0,
+      "answer_relevance": 0.7784067765170583,
+      "context_precision": 0.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Beta Systems' subscription tier is Premium",
+        "Beta Systems' account status is Active"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Beta Systems' subscription tier is Premium",
+          "confirmed": false
+        },
+        {
+          "fact": "Beta Systems' account status is Active",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_019": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.2,
+      "answer_relevance": 0.4498215532089642,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Ticket_id=1 has been open for more than 48 hours."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Ticket_id=1 has been open for more than 48 hours.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_020": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7103188136573951,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "At least 1 incident has affected the EU region in the starter data.",
+        "Further EU-region incidents are added to the count by the scaled synthetic incident_logs rows."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "At least 1 incident has affected the EU region in the starter data.",
+          "confirmed": false
+        },
+        {
+          "fact": "Further EU-region incidents are added to the count by the scaled synthetic incident_logs rows.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_021": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.4846312610955743,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Delta Logistics has a Suspended account status"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Delta Logistics has a Suspended account status",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_022": {
+    "confidence_score": 0.913095238095238,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6666666666666666,
+      "answer_relevance": 0.8118475836105213,
+      "context_precision": 0.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "The EU outage incident has a resolution status of Investigating.",
+        "The root cause of the EU outage incident is Database cluster overload.",
+        "The EU outage incident is still unresolved."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "The EU outage incident has a resolution status of Investigating.",
+          "confirmed": false
+        },
+        {
+          "fact": "The root cause of the EU outage incident is Database cluster overload.",
+          "confirmed": false
+        },
+        {
+          "fact": "The EU outage incident is still unresolved.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_023": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.4645070909173481,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "ticket_id=3 is assigned to the Security team"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "ticket_id=3 is assigned to the Security team",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_024": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.3793879733854297,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "article_id=2 has a known_issue_flag=True",
+        "The article with id 2 is 'Resolving High Latency in EU Region'",
+        "The article with id 2 is for product_version v3.0",
+        "The article with id 2 is in category Performance"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "article_id=2 has a known_issue_flag=True",
+          "confirmed": false
+        },
+        {
+          "fact": "The article with id 2 is 'Resolving High Latency in EU Region'",
+          "confirmed": false
+        },
+        {
+          "fact": "The article with id 2 is for product_version v3.0",
+          "confirmed": false
+        },
+        {
+          "fact": "The article with id 2 is in category Performance",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_025": {
+    "confidence_score": 0.96,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.5586133382232211,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Gamma Retail has a subscription tier of Standard",
+        "Gamma Retail has an account status of Trial",
+        "Gamma Retail has an SLA level of Basic"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Gamma Retail has a subscription tier of Standard",
+          "confirmed": false
+        },
+        {
+          "fact": "Gamma Retail has an account status of Trial",
+          "confirmed": false
+        },
+        {
+          "fact": "Gamma Retail has an SLA level of Basic",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_026": {
+    "confidence_score": 0.8843749999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.7436807303769339,
+      "context_precision": 0.8,
+      "context_recall": 0.5
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Ticket_id=1 has no severity/context match to a specific documented error code on its own",
+        "cross-referencing the API Error Codes Handbook's Input Validation/Auth sections is needed to confirm a specific root cause before closing"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Ticket_id=1 has no severity/context match to a specific documented error code on its own",
+          "confirmed": true
+        },
+        {
+          "fact": "cross-referencing the API Error Codes Handbook's Input Validation/Auth sections is needed to confirm a specific root cause before closing",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_027": {
+    "confidence_score": 0.96,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.39041470958066943,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Beta Systems is on sla_level='Enhanced'",
+        "The Enhanced SLA tier gives a 1-hour Critical response",
+        "The Enterprise SLA tier gives a 15-minute Critical response",
+        "The Enhanced tier does not carry the same priority-escalation path as Priority/Enterprise tiers"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Beta Systems is on sla_level='Enhanced'",
+          "confirmed": false
+        },
+        {
+          "fact": "The Enhanced SLA tier gives a 1-hour Critical response",
+          "confirmed": false
+        },
+        {
+          "fact": "The Enterprise SLA tier gives a 15-minute Critical response",
+          "confirmed": false
+        },
+        {
+          "fact": "The Enhanced tier does not carry the same priority-escalation path as Priority/Enterprise tiers",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_028": {
+    "confidence_score": 0.8959016393442623,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8126361898584132,
+      "context_precision": 0.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "incident_id=1 is an Outage in the EU region with root_cause='Database cluster overload'",
+        "KB article_id=2 documents a known latency issue in the EU region for v3.0"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "incident_id=1 is an Outage in the EU region with root_cause='Database cluster overload'",
+          "confirmed": false
+        },
+        {
+          "fact": "KB article_id=2 documents a known latency issue in the EU region for v3.0",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_029": {
+    "confidence_score": 0.8919354838709677,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.756299465121022,
+      "context_precision": 0.2,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Alpha Corp's Critical security ticket has no matching entry in incident_logs.",
+        "Starter incidents are Outage and API Failure only, no Security-type incident."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Alpha Corp's Critical security ticket has no matching entry in incident_logs.",
+          "confirmed": false
+        },
+        {
+          "fact": "Starter incidents are Outage and API Failure only, no Security-type incident.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_030": {
+    "confidence_score": 0.9749999999999999,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.711083742345861,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Delta Logistics is sla_level='Priority'",
+        "Delta Logistics' account_status is 'Suspended'",
+        "A suspended account with an active Priority SLA commitment is a conflict that needs human resolution"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Delta Logistics is sla_level='Priority'",
+          "confirmed": false
+        },
+        {
+          "fact": "Delta Logistics' account_status is 'Suspended'",
+          "confirmed": false
+        },
+        {
+          "fact": "A suspended account with an active Priority SLA commitment is a conflict that needs human resolution",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_031": {
+    "confidence_score": 0.8959016393442623,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.5289391881469876,
+      "context_precision": 1.0,
+      "context_recall": 0.5
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Beta Systems (Premium tier, Enhanced SLA) would fall under the Professional/Enterprise throughput tiers (200-1000+ req/sec).",
+        "A 429 on a Premium-tier account is more likely a burst-limit spike than a plan-limit issue."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Beta Systems (Premium tier, Enhanced SLA) would fall under the Professional/Enterprise throughput tiers (200-1000+ req/sec).",
+          "confirmed": false
+        },
+        {
+          "fact": "A 429 on a Premium-tier account is more likely a burst-limit spike than a plan-limit issue.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_032": {
+    "confidence_score": 0.96,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.695299464614402,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Gamma Retail is on sla_level='Basic'",
+        "The 'Basic' sla_level commits to a 24-hour response for Critical issues",
+        "The 'Basic' sla_level commits to a 48-hour response for Low severity issues"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Gamma Retail is on sla_level='Basic'",
+          "confirmed": false
+        },
+        {
+          "fact": "The 'Basic' sla_level commits to a 24-hour response for Critical issues",
+          "confirmed": false
+        },
+        {
+          "fact": "The 'Basic' sla_level commits to a 48-hour response for Low severity issues",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_033": {
+    "confidence_score": 0.6959016393442623,
+    "retrieval_mode": "RAG",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.6874269801302777,
+      "context_precision": 0.0,
+      "context_recall": 0.5
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "KB article_id=2 is tagged product_version='v3.0' and flagged known_issue_flag=True",
+        "the Performance & Scalability Guide's current caching/regional guidance is tagged v3.5"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "KB article_id=2 is tagged product_version='v3.0' and flagged known_issue_flag=True",
+          "confirmed": false
+        },
+        {
+          "fact": "the Performance & Scalability Guide's current caching/regional guidance is tagged v3.5",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_034": {
+    "confidence_score": 0.95,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 0.2,
+      "answer_relevance": 0.5344836784658454,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Alpha Corp has multiple simultaneous tickets open across different categories.",
+        "Multiple simultaneous tickets for the same customer is a signal that warrants escalation for cross-ticket review."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Alpha Corp has multiple simultaneous tickets open across different categories.",
+          "confirmed": true
+        },
+        {
+          "fact": "Multiple simultaneous tickets for the same customer is a signal that warrants escalation for cross-ticket review.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_035": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.8,
+      "answer_relevance": 0.6628843661407319,
+      "context_precision": 0.4,
+      "context_recall": 0.5
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Alpha Corp's Critical security ticket should be automatically escalated per SLA policy",
+        "ticket_id=3 has severity_level='Critical' and escalation_flag=True",
+        "SLA policy's escalation triggers specify Critical severity always auto-escalates regardless of SLA tier"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Alpha Corp's Critical security ticket should be automatically escalated per SLA policy",
+          "confirmed": false
+        },
+        {
+          "fact": "ticket_id=3 has severity_level='Critical' and escalation_flag=True",
+          "confirmed": true
+        },
+        {
+          "fact": "SLA policy's escalation triggers specify Critical severity always auto-escalates regardless of SLA tier",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_036": {
+    "confidence_score": null,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.4196889944747433,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Beta Systems is Premium-tier in the EU region",
+        "Critical severity requires immediate escalation and a 1-hour SLA response window under their Enhanced tier"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Beta Systems is Premium-tier in the EU region",
+          "confirmed": false
+        },
+        {
+          "fact": "Critical severity requires immediate escalation and a 1-hour SLA response window under their Enhanced tier",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_037": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.6865529271515415,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Active exploitation or data breach is classified as Critical/P0.",
+        "The response time for Critical classification is less than 15 minutes.",
+        "The patch timeline begins with development within 4 hours for Critical issues."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Active exploitation or data breach is classified as Critical/P0.",
+          "confirmed": true
+        },
+        {
+          "fact": "The response time for Critical classification is less than 15 minutes.",
+          "confirmed": true
+        },
+        {
+          "fact": "The patch timeline begins with development within 4 hours for Critical issues.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_038": {
+    "confidence_score": 0.8209016393442623,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 0.2,
+      "answer_relevance": 0.6337612972106227,
+      "context_precision": 0.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Delta Logistics' account was suspended for payment failure",
+        "Delta Logistics has a Priority-tier incident that remains open",
+        "A suspended account with an active Priority-tier commitment is a direct conflict that must be escalated for human account-team review"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Delta Logistics' account was suspended for payment failure",
+          "confirmed": false
+        },
+        {
+          "fact": "Delta Logistics has a Priority-tier incident that remains open",
+          "confirmed": false
+        },
+        {
+          "fact": "A suspended account with an active Priority-tier commitment is a direct conflict that must be escalated for human account-team review",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_039": {
+    "confidence_score": 0.9650000000000001,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Medium",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.4666449129028003,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Alpha Corp has an open Integration ticket and an escalated Critical Security ticket simultaneously",
+        "concurrent tickets spanning categories for one customer should trigger a systemic-pattern review"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Alpha Corp has an open Integration ticket and an escalated Critical Security ticket simultaneously",
+          "confirmed": true
+        },
+        {
+          "fact": "concurrent tickets spanning categories for one customer should trigger a systemic-pattern review",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_040": {
+    "confidence_score": 0.8959016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": true,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.5321880389719121,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "An unresolved Critical incident requires ongoing escalation per SLA policy's Critical response tier.",
+        "The Critical response tier has an escalation time as low as 15 minutes for Enterprise."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "An unresolved Critical incident requires ongoing escalation per SLA policy's Critical response tier.",
+          "confirmed": true
+        },
+        {
+          "fact": "The Critical response tier has an escalation time as low as 15 minutes for Enterprise.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_041": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.7125613437021725,
+      "context_precision": 1.0,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "A confirmed data breach or active security incident is defined as Critical (P0) severity.",
+        "Response time under 15 minutes is required for a confirmed data breach or active security incident.",
+        "Immediate containment is required for a confirmed data breach or active security incident.",
+        "The data breach response protocol is required for a confirmed data breach or active security incident.",
+        "Escalation per the severity classification is required for a confirmed data breach or active security incident."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A confirmed data breach or active security incident is defined as Critical (P0) severity.",
+          "confirmed": false
+        },
+        {
+          "fact": "Response time under 15 minutes is required for a confirmed data breach or active security incident.",
+          "confirmed": false
+        },
+        {
+          "fact": "Immediate containment is required for a confirmed data breach or active security incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "The data breach response protocol is required for a confirmed data breach or active security incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "Escalation per the severity classification is required for a confirmed data breach or active security incident.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_042": {
+    "confidence_score": 0.6859016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.7574530595386516,
+      "context_precision": 0.6,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "A time-based trigger auto-escalates the ticket to the next support tier when 80% of the SLA has elapsed.",
+        "The auto-escalation occurs regardless of the assigned team."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A time-based trigger auto-escalates the ticket to the next support tier when 80% of the SLA has elapsed.",
+          "confirmed": false
+        },
+        {
+          "fact": "The auto-escalation occurs regardless of the assigned team.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_043": {
+    "confidence_score": 0.9209016393442622,
+    "retrieval_mode": "RAG",
+    "escalation_flag": false,
+    "correct": true,
+    "effective_severity": "Low",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.8249120026119678,
+      "context_precision": 0.8,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "A critical business function being unavailable qualifies an incident for executive notification as a Major Incident.",
+        "A financial impact over $50,000/hour qualifies an incident for executive notification as a Major Incident."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A critical business function being unavailable qualifies an incident for executive notification as a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "A financial impact over $50,000/hour qualifies an incident for executive notification as a Major Incident.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_044": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": true,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.2,
+      "answer_relevance": 0.6316724965002963,
+      "context_precision": 1.0,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "This meets the Financial Impact criterion for a Major Incident.",
+        "The financial loss exceeds $50,000/hour."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "This meets the Financial Impact criterion for a Major Incident.",
+          "confirmed": true
+        },
+        {
+          "fact": "The financial loss exceeds $50,000/hour.",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_045": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": true,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.6099099538407201,
+      "context_precision": 1.0,
+      "context_recall": 1.0
+    },
+    "correctness_audit": {
+      "correct": true,
+      "extracted_facts": [
+        "Active data exfiltration is an explicit Critical (P0) example under the security severity classification",
+        "Response time under 15 minutes is required for active data exfiltration",
+        "Immediate containment is required for active data exfiltration",
+        "Data breach response protocol is required for active data exfiltration"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Active data exfiltration is an explicit Critical (P0) example under the security severity classification",
+          "confirmed": true
+        },
+        {
+          "fact": "Response time under 15 minutes is required for active data exfiltration",
+          "confirmed": true
+        },
+        {
+          "fact": "Immediate containment is required for active data exfiltration",
+          "confirmed": true
+        },
+        {
+          "fact": "Data breach response protocol is required for active data exfiltration",
+          "confirmed": true
+        }
+      ]
+    }
+  },
+  "gq_046": {
+    "confidence_score": 0.95,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.42963766478894877,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Delta Logistics has a Priority-tier incident that is still active",
+        "Delta Logistics has an account status of 'Suspended'",
+        "Delta Logistics has no resolved incident on record",
+        "A tier downgrade while a Priority commitment is active on an already-suspended account must be escalated to a human account manager"
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Delta Logistics has a Priority-tier incident that is still active",
+          "confirmed": false
+        },
+        {
+          "fact": "Delta Logistics has an account status of 'Suspended'",
+          "confirmed": false
+        },
+        {
+          "fact": "Delta Logistics has no resolved incident on record",
+          "confirmed": false
+        },
+        {
+          "fact": "A tier downgrade while a Priority commitment is active on an already-suspended account must be escalated to a human account manager",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_047": {
+    "confidence_score": 0.96,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 0.4,
+      "answer_relevance": 0.4448476877771584,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "A data-loss compensation request with no corroborating incident record must be escalated for human investigation.",
+        "No matching entry exists in incident_logs to substantiate the claim."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "A data-loss compensation request with no corroborating incident record must be escalated for human investigation.",
+          "confirmed": true
+        },
+        {
+          "fact": "No matching entry exists in incident_logs to substantiate the claim.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_048": {
+    "confidence_score": 0.9059016393442623,
+    "retrieval_mode": "Critical",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6,
+      "answer_relevance": 0.5931426802166396,
+      "context_precision": 0.2,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Ticket_id=3 has no resolved_at timestamp.",
+        "Ticket_id=3 has no documented resolution.",
+        "Ticket_id=3 is a Critical, escalated ticket.",
+        "A Critical, escalated ticket without evidence must be escalated to a human reviewer rather than closed automatically."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Ticket_id=3 has no resolved_at timestamp.",
+          "confirmed": true
+        },
+        {
+          "fact": "Ticket_id=3 has no documented resolution.",
+          "confirmed": true
+        },
+        {
+          "fact": "Ticket_id=3 is a Critical, escalated ticket.",
+          "confirmed": true
+        },
+        {
+          "fact": "A Critical, escalated ticket without evidence must be escalated to a human reviewer rather than closed automatically.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_049": {
+    "confidence_score": null,
+    "retrieval_mode": "Hybrid",
+    "escalation_flag": true,
+    "correct": false,
+    "effective_severity": "Critical",
+    "ragas_scores": {
+      "faithfulness": 0.6666666666666666,
+      "answer_relevance": 0.2275163371597271,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "Responsible-disclosure and data-breach protocol require timely notification/acknowledgment within 24 hours.",
+        "Suppressing a security vulnerability notification is against policy.",
+        "Security vulnerability notifications must be escalated to the security team."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "Responsible-disclosure and data-breach protocol require timely notification/acknowledgment within 24 hours.",
+          "confirmed": false
+        },
+        {
+          "fact": "Suppressing a security vulnerability notification is against policy.",
+          "confirmed": false
+        },
+        {
+          "fact": "Security vulnerability notifications must be escalated to the security team.",
+          "confirmed": false
+        }
+      ]
+    }
+  },
+  "gq_050": {
+    "confidence_score": 0.96,
+    "retrieval_mode": "SQL",
+    "escalation_flag": false,
+    "correct": false,
+    "effective_severity": "High",
+    "ragas_scores": {
+      "faithfulness": 1.0,
+      "answer_relevance": 0.4056353954554384,
+      "context_precision": 1.0,
+      "context_recall": 0.0
+    },
+    "correctness_audit": {
+      "correct": false,
+      "extracted_facts": [
+        "An SLA breach auto-escalates regardless of tier.",
+        "Suppressing the escalation for Beta Systems must be approved by a human."
+      ],
+      "fact_verdicts": [
+        {
+          "fact": "An SLA breach auto-escalates regardless of tier.",
+          "confirmed": false
+        },
+        {
+          "fact": "Suppressing the escalation for Beta Systems must be approved by a human.",
+          "confirmed": false
+        }
+      ]
+    }
+  }
+}
