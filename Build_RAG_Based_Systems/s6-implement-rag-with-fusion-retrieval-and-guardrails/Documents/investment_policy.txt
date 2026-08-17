@@ -1,0 +1,20 @@
+Investment Policy Statement
+
+Our firm follows strict investment guidelines:
+
+Risk Tolerance Levels:
+| Profile | Equity % | Fixed Income % | Maximum Drawdown |
+|---------|----------|----------------|------------------|
+| Conservative | 30 | 70 | -10% |
+| Moderate | 60 | 40 | -20% |
+| Aggressive | 80 | 20 | -30% |
+
+Rebalancing Policy:
+Portfolios are rebalanced quarterly or when allocations drift more than 5% from target levels.
+We use tax-loss harvesting strategies when applicable.
+
+Approved Asset Classes:
+- Domestic equities (large-cap, mid-cap, small-cap)
+- International equities (developed and emerging markets)
+- Fixed income (government bonds, corporate bonds, municipal bonds)
+- Alternative investments (REITs, commodities)

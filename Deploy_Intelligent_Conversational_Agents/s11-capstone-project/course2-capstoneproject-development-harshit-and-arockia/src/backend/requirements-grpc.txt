@@ -1,0 +1,8 @@
+# gRPC transport — required only for the standalone gRPC / gRPC-Web servers
+# NOT installed on Vercel (see requirements.txt for the Vercel/HTTP deps)
+#
+# Install for local development:
+#   pip install -r requirements.txt -r requirements-grpc.txt
+grpcio>=1.62.0,<2.0.0
+grpcio-tools>=1.62.0,<2.0.0   # protoc compiler — run generate_proto.py once
+sonora>=0.2.0,<0.3.0           # gRPC-Web WSGI adapter (latest PyPI release is 0.2.3)

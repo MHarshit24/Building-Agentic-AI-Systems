@@ -1,0 +1,127 @@
+# =============================================
+# Python Artifacts
+# =============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.installed.cfg
+MANIFEST
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# =============================================
+# Virtual Environments
+# =============================================
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# =============================================
+# Environment Variables & Secrets (DO NOT PUSH)
+# =============================================
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+secrets/
+credentials/
+*.key
+*.pem
+
+# =============================================
+# IDE & Editor
+# =============================================
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# =============================================
+# Testing & Coverage
+# =============================================
+.tox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+
+# =============================================
+# Deployment & Build
+# =============================================
+.vercel/
+vercel.json
+build/
+dist/
+.next/
+out/
+
+# =============================================
+# Frontend Related (Node.js)
+# =============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env.*.local
+index.dist.html
+
+# =============================================
+# OS Files
+# =============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# =============================================
+# Logs
+# =============================================
+*.log
+logs/
+
+# =============================================
+# Temporary & Backup Files
+# =============================================
+*.tmp
+*.temp
+tmp/
+*.bak
+*.backup
+*.orig
+
+# =============================================
+# Database Files
+# =============================================
+*.db
+*.sqlite
+*.sqlite3
+
+# =============================================
+# LangChain/LLM & Observability
+# =============================================
+.langchain/
+.langfuse/
+*.pkl
+*.pickle

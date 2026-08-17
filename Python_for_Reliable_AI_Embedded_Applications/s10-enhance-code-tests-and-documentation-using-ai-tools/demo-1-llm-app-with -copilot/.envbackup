@@ -1,0 +1,4 @@
+# add your keys here and after that rename the file as .env
+GEMINI_API_KEY=tour_key_here
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+GEMINI_MODEL_NAME=gemini-2.0-flash

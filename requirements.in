@@ -1,0 +1,59 @@
+fastapi
+uvicorn
+pydantic
+langchain
+langchain-openai
+langchain-postgres
+openai
+psycopg[binary]
+pgvector
+google-genai
+langfuse
+httpx
+requests
+python-dotenv
+python-jose
+SQLAlchemy
+orjson
+tiktoken
+mangum
+sonora
+crewai==1.14.7
+crewai-tools
+chromadb
+lancedb
+azure-ai-inference
+azure-storage-blob
+ragas
+pdfplumber
+python-docx
+openpyxl
+boto3
+litellm
+fastapi-sso
+email-validator
+bcrypt
+redis
+protobuf<6
+marshmallow<4
+wrapt<2
+importlib-metadata<8.8.0
+async-timeout<5
+urllib3<2
+google-generativeai==0.8.6
+google-ai-generativelanguage==0.6.15
+google-api-core<2.30
+
+
+# From now on:
+# ❌ Don’t do this:
+# pip install -U <package>
+# ✅ Do this instead:
+# pip-compile --upgrade
+
+# 👉 Let the resolver respect all constraints.
+
+# NOTE on crewai: in the past, installing/upgrading crewai silently downgraded
+# unrelated packages in this environment. crewai is pinned exact above for this
+# reason — always run `pip-compile --upgrade-package crewai` in isolation (not
+# a blanket --upgrade) and diff the resulting requirements.txt before applying.

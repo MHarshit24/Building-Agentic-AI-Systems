@@ -1,0 +1,10 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://myrepos.stackroute.niit.com/1986713_Harshit/p1-ai-tutor-microservices-orchestrated-with-grpc
+	fetch = +refs/heads/*:refs/remotes/origin/*

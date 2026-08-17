@@ -1,0 +1,13 @@
+[project]
+name = "technical-documention-generation"
+version = "0.1.0"
+description = "Technical documentation generator with self-correction using reflection pattern"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-openai==1.0.0",
+    "langgraph==1.0.0",
+    "python-dotenv==1.2.1",
+    "fastapi==0.121.0",
+    "uvicorn[standard]==0.38.0",
+]

@@ -1,0 +1,9 @@
+Capacity Management Best Practices
+Utilization Rate Interpretation:
+    • <70%: Significant underutilization, financial inefficiency
+    • 70-75%: Below optimal, capacity for growth
+    • 75-85%: Optimal range (TARGET)
+    • 85-90%: High utilization, monitor for strain
+    • >90%: Overcrowding risk, quality concerns
+Department-Specific Considerations: Emergency Department: Higher variability expected, focus on surge capacity readiness rather than consistent utilization.
+Elective Surgery Departments (e.g., Orthopedics): Should maintain 80-85% utilization for maximum efficiency while preserving emergency capacity.

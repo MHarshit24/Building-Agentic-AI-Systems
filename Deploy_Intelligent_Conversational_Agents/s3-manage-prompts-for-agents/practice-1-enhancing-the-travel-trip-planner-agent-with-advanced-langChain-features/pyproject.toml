@@ -1,0 +1,15 @@
+[project]
+name = "travel-bot-2"
+version = "0.1.0"
+description = "Travel Planner Advanced: FastAPI service demonstrating LangChain prompts, structured Pydantic output parsing, and retry parsing using an LLM (Gemini via langchain_openai)."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+	"fastapi==0.121.0",
+	"pydantic==2.2.4",
+	"python-dotenv==1.2.1",
+	"uvicorn[standard]==0.38.0",
+	"langchain==1.0.0",
+	"langchain-openai==1.0.0",
+	"langfuse==3.9.1"
+]

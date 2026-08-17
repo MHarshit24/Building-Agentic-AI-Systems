@@ -1,0 +1,38 @@
+[project]
+name = "automind-s1-rag-infra"
+version = "0.1.0"
+description = "AutoMind Motors Sprint 1 - RAG infrastructure setup with PgVector and embeddings"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+ "langchain-openai==1.0.0",
+    "numpy==2.3.4",
+    "python-dotenv==1.2.1",
+    "pydantic==2.12.4",
+    "psycopg2-binary==2.9.11",
+    "fastapi==0.121.0",
+    "uvicorn[standard]==0.38.0",
+    "langchain_postgres==0.0.16",
+    "starlette>=0.40.0,<0.50.0",
+    "pytest==8.0.0",
+    "pytest-mock==3.12.0",
+    "pytest-cov==4.1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+pythonpath = ["."]
+norecursedirs = ["main", ".git", ".venv", "venv", "env", "__pycache__", "*.egg"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--ignore=main",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+]

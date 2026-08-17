@@ -1,0 +1,14 @@
+[project]
+name = "expense-policy-validator"
+version = "0.1.0"
+description = "Sprint 7 Practice: Expense Policy Validator (3-agent hierarchical crew)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "crewai>=1.8.1",
+    "crewai[azure-ai-inference]",
+    "python-dotenv>=1.1.1",
+    "fastapi>=0.121.0",
+    "uvicorn[standard]>=0.38.0",
+    "pydantic>=2.11.9",
+]

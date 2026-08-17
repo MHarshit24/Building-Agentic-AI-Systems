@@ -1,0 +1,24 @@
+Terminal 1(backend): cd C:\Users\harsh\NIIT\Building_Agentic_AI_Systems\Build_Autonomous_Multi_Agent_Systems\s11-course-end-project\Autonomous_Event_Planning_Team
+python scripts/run_local.py
+
+open: http://127.0.0.1:8000/docs
+
+
+
+
+
+Terminal 2(frontend): cd C:\Users\harsh\NIIT\Building_Agentic_AI_Systems\Build_Autonomous_Multi_Agent_Systems\s11-course-end-project\Autonomous_Event_Planning_Team\front-end
+npm install
+npm run dev
+Note: If npm already installed, just npm run dev
+
+open: http://localhost:3000
+
+
+
+
+
+
+Deployed:
+Backend: https://event-planning-backend-yeti.onrender.com/docs
+Frontend: https://event-planning-frontend-ezdx.onrender.com/

@@ -1,0 +1,15 @@
+front-end/
+tests/
+docs/
+scripts/
+logs/
+venv/
+.venv/
+pip/
+__pycache__/
+.pytest_cache/
+event_plans.db
+event_plans.db-shm
+event_plans.db-wal
+.env
+web.config

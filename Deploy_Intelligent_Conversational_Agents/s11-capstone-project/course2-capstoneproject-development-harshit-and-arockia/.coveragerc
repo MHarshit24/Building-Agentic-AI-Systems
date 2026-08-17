@@ -1,0 +1,21 @@
+[run]
+source = src/backend
+omit =
+    src/backend/proto/*_pb2*.py
+    src/backend/proto/__init__.py
+    src/backend/generate_proto.py
+    src/backend/grpc_web_server.py
+    tests/*
+
+[report]
+show_missing = true
+skip_covered = false
+exclude_lines =
+    pragma: no cover
+    if __name__ == .__main__.:
+    raise NotImplementedError
+    \.\.\.
+
+[html]
+directory = htmlcov
+title = Job Placement Agent — Coverage Report

@@ -1,0 +1,62 @@
+{
+  "name": "convert_code",
+  "description": "Convert source code from one programming language to another while preserving logic and structure",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "source_language": {
+        "type": "string",
+        "enum": [
+          "java",
+          "python",
+          "javascript",
+          "csharp",
+          "cpp",
+          "go",
+          "typescript"
+        ],
+        "description": "Programming language of the input code"
+      },
+      "target_language": {
+        "type": "string",
+        "enum": [
+          "java",
+          "python",
+          "javascript",
+          "csharp",
+          "cpp",
+          "go",
+          "typescript"
+        ],
+        "description": "Programming language to convert the code into"
+      },
+      "source_code": {
+        "type": "string",
+        "description": "The complete source code to be converted"
+      },
+      "conversion_type": {
+        "type": "string",
+        "enum": [
+          "syntax_only",
+          "idiomatic",
+          "optimized"
+        ],
+        "description": "Type of conversion: basic syntax mapping, idiomatic rewrite, or optimized version"
+      },
+      "include_comments": {
+        "type": "boolean",
+        "description": "Whether to include explanatory comments in the converted code"
+      },
+      "preserve_structure": {
+        "type": "boolean",
+        "description": "Whether to preserve class and method structure exactly as in the source"
+      }
+    },
+    "required": [
+      "source_language",
+      "target_language",
+      "source_code"
+    ]
+  },
+  "strict": false
+}

@@ -1,0 +1,104 @@
+
+<h2 class="sr-only">FinDoc Analyzer v1.1 — Full requirement coverage report showing all gaps and partials now resolved</h2>
+<style>
+  .req-section { margin-bottom: 1.5rem; }
+  .req-section h3 { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 6px; }
+  .req-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .req-row:last-child { border-bottom: none; }
+  .badge { font-size: 11px; font-weight: 500; padding: 2px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+  .badge-yes  { background: #EAF3DE; color: #27500A; }
+  .badge-fix  { background: #E6F1FB; color: #0C447C; }
+  .req-label  { font-size: 13px; color: var(--color-text-primary); flex: 1; }
+  .req-file   { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; font-family: var(--font-mono); }
+  .fix-tag    { font-size: 10px; font-weight: 500; background: #E6F1FB; color: #0C447C; border-radius: 4px; padding: 1px 5px; margin-left: 5px; vertical-align: middle; }
+  .summary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 1.5rem; }
+  .metric-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 16px; text-align: center; }
+  .metric-num  { font-size: 28px; font-weight: 500; }
+  .num-yes     { color: #3B6D11; }
+  .num-fix     { color: #185FA5; }
+  .num-zero    { color: #A32D2D; }
+  .metric-label { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+  .legend { display: flex; gap: 16px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+
+<div style="padding: 1rem 0;">
+
+  <div class="summary-grid">
+    <div class="metric-card">
+      <div class="metric-num num-yes">28</div>
+      <div class="metric-label">fully covered</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num num-fix">6</div>
+      <div class="metric-label">fixed in v1.1</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num num-zero">0</div>
+      <div class="metric-label">gaps remaining</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#3B6D11"></div> done from v1.0</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#185FA5"></div> fixed in v1.1</div>
+  </div>
+
+  <div class="req-section">
+    <h3>Functional requirements</h3>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Ingest PDFs, XLS, CSV financial reports</div><div class="req-file">ingest_routes.py → SimpleDirectoryReader + allowed_ext</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Document chunking + embedding pipeline</div><div class="req-file">rag_service.py → IngestionPipeline + SentenceSplitter</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">Extract tables, charts & footnotes from PDFs <span class="fix-tag">v1.1</span></div><div class="req-file">table_extractor.py → PDFTableExtractor (pymupdf find_tables) + SpreadsheetTableExtractor (pandas)</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">RAG → narrative explanations & summaries</div><div class="req-file">query_router.py → RAG branch via LlamaIndex query engine</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">SQL → deterministic values, ratios, time-series</div><div class="req-file">sql_service.py → NLSQLTableQueryEngine</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Hybrid → combined RAG + SQL synthesis</div><div class="req-file">query_router.py → _merge_rag_sql() via LLM</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Natural language query interface</div><div class="req-file">POST /api/v1/query with QueryRequest model</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">SQL tables for financial statements + ratios</div><div class="req-file">sql_service.py + scripts/setup_db.py (3 tables + seed data)</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">MCP external system integration</div><div class="req-file">mcp/mcp_client.py → FinDocMCPService + graceful fallback</div></div></div>
+  </div>
+
+  <div class="req-section">
+    <h3>Safety & guardrails</h3>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Input validation (prompt injection, SQL injection)</div><div class="req-file">guardrails/validators.py → validate_input()</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Output validation + investment advice detection</div><div class="req-file">guardrails/validators.py → validate_output()</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Numerical traceability / source attribution</div><div class="req-file">validators.py → validate_financial_claim() + source_nodes in response</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Uncertainty detection + disclaimer injection</div><div class="req-file">validators.py → UNCERTAINTY_PHRASES + disclaimer appended</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">guardrails-ai SDK integration <span class="fix-tag">v1.1</span></div><div class="req-file">validators.py → Guard + DetectPII from guardrails-ai hub; graceful fallback to custom validators</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">Presidio PII detection <span class="fix-tag">v1.1</span></div><div class="req-file">validators.py → AnalyzerEngine from presidio-analyzer + spacy en_core_web_lg</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">Hallucination indicator detection <span class="fix-tag">v1.1</span></div><div class="req-file">validators.py → HALLUCINATION_INDICATORS regex patterns in validate_output()</div></div></div>
+  </div>
+
+  <div class="req-section">
+    <h3>Evaluation & SLOs</h3>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Faithfulness evaluation (answer grounded in context)</div><div class="req-file">evaluation_service.py → evaluate_faithfulness_score()</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Relevance evaluation (answer addresses question)</div><div class="req-file">evaluation_service.py → evaluate_answer_relevance()</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">Context precision metric <span class="fix-tag">v1.1</span></div><div class="req-file">evaluation_service.py → evaluate_context_precision() scored per query + logged</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Latency measurement per query</div><div class="req-file">query_routes.py → time.time() + log_query(latency_ms)</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">p95 latency tracking <span class="fix-tag">v1.1</span></div><div class="req-file">evaluation_service.py → _percentile() + p95_latency_ms in SLO report</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">SLO thresholds + compliance report</div><div class="req-file">evaluation_service.py → compute_slo_report() + GET /evaluate</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Langfuse tracing integration</div><div class="req-file">evaluation_service.py → get_langfuse_client() + span tracking</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">RAGAS evaluation framework <span class="fix-tag">v1.1</span></div><div class="req-file">evaluation_service.py → run_ragas_evaluation() + POST /evaluate/ragas batch endpoint</div></div></div>
+  </div>
+
+  <div class="req-section">
+    <h3>Human handoff</h3>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Auto-handoff on low faithfulness / relevance / confidence</div><div class="req-file">handoff_service.py → evaluate_score() + evaluate_confidence_score()</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">LLM intent classifier for explicit escalation</div><div class="req-file">handoff_service.py → evaluate_explicit_user_request()</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Full context transfer (question, answer, sources, scores)</div><div class="req-file">query_routes.py → handoff_context bundle with eval scores + POST /handoff</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Email notification to expert team</div><div class="req-file">handoff_service.py → send_handoff_email() via SMTP</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Reference ID generation for ticket tracking</div><div class="req-file">handoff_service.py → generate_handoff_reference_id()</div></div></div>
+  </div>
+
+  <div class="req-section">
+    <h3>Infrastructure & observability</h3>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">PostgreSQL + pgvector setup</div><div class="req-file">scripts/setup_db.py → full DB init + pgvector enable + seed data</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Modular architecture (services / routes / guardrails)</div><div class="req-file">30 files across 7 packages with clean separation</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">Anthropic / Claude API support <span class="fix-tag">v1.1</span></div><div class="req-file">rag_service.py → _build_llm("anthropic") via LLM_PROVIDER=anthropic + ANTHROPIC_API_KEY</div></div></div>
+    <div class="req-row"><span class="badge badge-fix">fixed</span><div><div class="req-label">OpenAI direct API support <span class="fix-tag">v1.1</span></div><div class="req-file">rag_service.py → _build_llm("openai") via LLM_PROVIDER=openai + OPENAI_API_KEY</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Health check + component observability</div><div class="req-file">health_routes.py → 10-component status (guardrails-ai, RAGAS, presidio, pymupdf all visible)</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Error handling + async background tasks</div><div class="req-file">All routes: try/except + BackgroundTasks for email/logging</div></div></div>
+    <div class="req-row"><span class="badge badge-yes">done</span><div><div class="req-label">Optional packages installer script</div><div class="req-file">scripts/install_optional.sh → guardrails hub, spacy model, RAGAS, Anthropic adapter</div></div></div>
+  </div>
+
+</div>

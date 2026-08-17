@@ -1,0 +1,7 @@
+[project]
+name = "p6-sum-of-odd-and-even"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []

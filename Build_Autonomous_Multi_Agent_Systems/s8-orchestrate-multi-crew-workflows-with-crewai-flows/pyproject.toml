@@ -1,0 +1,13 @@
+[project]
+name = "resume-screening"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "crewai",
+    "crewai[azure-ai-inference]",
+    "python-dotenv",
+    "fastapi",
+    "uvicorn",
+]

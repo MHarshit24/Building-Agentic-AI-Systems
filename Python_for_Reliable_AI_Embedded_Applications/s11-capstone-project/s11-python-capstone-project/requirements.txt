@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+requests
+python-dotenv
+pytest
+google-genai
+slowapi
+pytest-cov
+httpx
+psycopg2-binary

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package prompts;
+
+// Service definition for Prompt Manager
+// This service manages system prompts for different AI tasks
+
+service PromptManager {
+  rpc GetPrompt (PromptRequest) returns (PromptResponse);
+}
+
+message PromptRequest {
+  string topic = 1;
+}
+
+message PromptResponse {
+  string prompt = 1;
+}

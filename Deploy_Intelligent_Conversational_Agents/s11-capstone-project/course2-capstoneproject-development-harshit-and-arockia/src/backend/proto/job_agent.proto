@@ -1,0 +1,129 @@
+syntax = "proto3";
+
+package job_agent;
+
+// ── System ────────────────────────────────────────────────────────────────────
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status  = 1;
+  string version = 2;
+  string message = 3;
+}
+
+// ── Authentication ────────────────────────────────────────────────────────────
+
+message GetTokenRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message GetTokenResponse {
+  string access_token = 1;
+  string token_type   = 2;
+  int32  expires_in   = 3;
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+
+message ChatRequest {
+  // Required. The user's message (1–4000 characters).
+  string message    = 1;
+  // Optional. Omit to auto-generate a new session ID.
+  string session_id = 2;
+}
+
+message ChatResponse {
+  string response   = 1;
+  string session_id = 2;
+}
+
+// ── Job Search ────────────────────────────────────────────────────────────────
+
+message JobSearchRequest {
+  string query      = 1;  // e.g. "Senior Python Engineer"
+  string location   = 2;  // optional, e.g. "Remote" or "New York, NY"
+  string session_id = 3;  // optional
+}
+
+message JobSearchResponse {
+  string results    = 1;  // formatted job listings text
+  string session_id = 2;
+}
+
+// ── Resume Analysis ───────────────────────────────────────────────────────────
+
+message ResumeAnalysisRequest {
+  string resume_text     = 1;  // 50–50 000 chars
+  string job_description = 2;  // optional; enables gap analysis
+  string session_id      = 3;  // optional
+}
+
+message ResumeAnalysisResponse {
+  string analysis   = 1;
+  string session_id = 2;
+}
+
+// ── Cover Letter ──────────────────────────────────────────────────────────────
+
+message CoverLetterRequest {
+  string resume_text     = 1;  // required, 50–50 000 chars
+  string job_title       = 2;  // required
+  string company_name    = 3;  // required
+  string job_description = 4;  // required, 10–10 000 chars
+  string user_name       = 5;  // optional; defaults to "Applicant"
+  string session_id      = 6;  // optional
+}
+
+message CoverLetterResponse {
+  string cover_letter = 1;
+  string session_id   = 2;
+}
+
+// ── Session Management ────────────────────────────────────────────────────────
+
+message CreateSessionRequest {}
+
+message CreateSessionResponse {
+  string session_id = 1;
+  string message    = 2;
+}
+
+message ClearSessionRequest {
+  string session_id = 1;
+}
+
+message ClearSessionResponse {
+  string message    = 1;
+  string session_id = 2;
+}
+
+message ListSessionsRequest {}
+
+message ListSessionsResponse {
+  repeated string sessions = 1;
+}
+
+// ── Service ───────────────────────────────────────────────────────────────────
+//
+// Protected RPCs require the gRPC call metadata to contain:
+//   authorization: Bearer <access_token>
+//
+// Obtain a token via GetToken, then attach it to every protected call.
+
+service JobAgentService {
+  // ── Public (no auth required) ────────────────────────────────────────────
+  rpc HealthCheck   (HealthRequest)        returns (HealthResponse);
+  rpc GetToken      (GetTokenRequest)      returns (GetTokenResponse);
+  rpc ChatPublic    (ChatRequest)          returns (ChatResponse);
+  rpc CreateSession (CreateSessionRequest) returns (CreateSessionResponse);
+
+  // ── Protected (authorization metadata required) ───────────────────────────
+  rpc Chat                (ChatRequest)             returns (ChatResponse);
+  rpc SearchJobs          (JobSearchRequest)        returns (JobSearchResponse);
+  rpc AnalyzeResume       (ResumeAnalysisRequest)   returns (ResumeAnalysisResponse);
+  rpc GenerateCoverLetter (CoverLetterRequest)      returns (CoverLetterResponse);
+  rpc ClearSession        (ClearSessionRequest)     returns (ClearSessionResponse);
+  rpc ListSessions        (ListSessionsRequest)     returns (ListSessionsResponse);
+}

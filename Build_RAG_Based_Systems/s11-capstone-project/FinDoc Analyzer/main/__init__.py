@@ -1,0 +1,1 @@
+# FinDoc Analyzer package

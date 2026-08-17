@@ -1,0 +1,7 @@
+ProductA, 15, 1200.50
+ProductB, 10, 800.00
+ProductC, five, 1000.00
+ProductD, 20, 1500.25
+ProductE, 0, 600.00
+ProductF, 12, -300.00
+ProductG, 8, 950.75

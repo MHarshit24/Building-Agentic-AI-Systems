@@ -1,0 +1,21 @@
+[project]
+name = "autonomous-event-planning-team"
+version = "0.0.1"
+dependencies = [
+  "fastapi",
+  "uvicorn",
+  "langgraph",
+  "langgraph-checkpoint-sqlite",
+  "langchain",
+  "pydantic",
+  "pydantic-settings",
+  "python-dotenv",
+  "litellm",
+  "guardrails-ai",
+  "presidio-analyzer",
+  "presidio-anonymizer",
+  "langfuse",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]

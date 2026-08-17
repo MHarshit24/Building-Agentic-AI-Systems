@@ -1,0 +1,19 @@
+model_list:
+  # TODO: Configure the Simple Tier model (Ollama)
+  - model_name: simple-agent
+    litellm_params:
+      model: ollama/llama3.2
+      api_base: http://localhost:11434
+  - model_name: simple-agent
+    litellm_params:
+      model: ollama/phi3:mini
+      api_base: http://localhost:11434
+
+  # TODO: Configure the Complex Tier model (Azure OpenAI)
+  - model_name: complex-agent
+    litellm_params:
+      model: azure/gpt-4o-mini
+      api_base: os.environ/AZURE_OPENAI_ENDPOINT
+      api_key: os.environ/AZURE_OPENAI_API_KEY
+      api_version: os.environ/AZURE_OPENAI_API_VERSION
+      deployment_id: os.environ/AZURE_OPENAI_LLM_DEPLOYMENT

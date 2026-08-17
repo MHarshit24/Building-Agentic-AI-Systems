@@ -1,0 +1,14 @@
+[project]
+name = "sprint-practice"
+version = "0.1.0"
+description = "Banking Customer Support ReAct Agent - Sprint Practice"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.121.0",
+    "langgraph==1.0.0",
+    "langchain-openai==1.0.0",
+    "langchain-core==1.0.1",
+    "uvicorn[standard]==0.38.0",
+    "python-dotenv==1.2.1",
+]

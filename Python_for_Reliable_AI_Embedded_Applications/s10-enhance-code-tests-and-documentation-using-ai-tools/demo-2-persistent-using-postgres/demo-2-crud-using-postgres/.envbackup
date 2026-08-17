@@ -1,0 +1,26 @@
+
+GEMINI_API_KEY=AIzaSyB8IEVCbF2ZOXqUTx9-IRqSv6vGSBSek5M
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+GEMINI_MODEL=gemini-2.5-flash
+
+
+# Database Configuration
+# PostgreSQL connection URL format: postgresql://username:password@host:port/database_name
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/fastapi_crud_db
+
+# Application Settings
+APP_NAME=FastAPI PostgreSQL CRUD API
+DEBUG=True
+ENVIRONMENT=development
+
+# Server Configuration
+HOST=0.0.0.0
+PORT=8000
+
+# Database Pool Settings (Optional - defaults are set in database.py)
+DB_POOL_SIZE=10
+DB_MAX_OVERFLOW=20
+
+# Logging Level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+LOG_LEVEL=INFO
+

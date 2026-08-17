@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Placement Agent | AI Career Assistant</title>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.1/auth0-spa-js.production.js"></script>
+  <script src="https://unpkg.com/lucide@0.441.0/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:       #0d1f35;
+      --navy-mid:   #152d48;
+      --navy-lite:  #1e3a5f;
+      --accent:     #3b82f6;
+      --accent-lt:  #eff6ff;
+      --success:    #10b981;
+      --danger:     #ef4444;
+      --text:       #0f172a;
+      --text-muted: #64748b;
+      --border:     #e2e8f0;
+      --bg:         #f1f5f9;
+      --white:      #ffffff;
+      --r-sm: 8px; --r: 12px; --r-lg: 18px;
+      --shadow-sm: 0 1px 4px rgba(0,0,0,.06);
+      --shadow:    0 4px 18px rgba(0,0,0,.09);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.18);
+    }
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5;
+    }
+
+    /* ── Loading screen ─────────────────────────────────────────────── */
+    #loading-screen {
+      position: fixed; inset: 0; background: var(--navy);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px; z-index: 9999;
+    }
+    .loader-logo {
+      width: 56px; height: 56px; background: var(--accent); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; color: #fff;
+    }
+    .loader-logo svg { width: 28px; height: 28px; }
+    .loader-spinner {
+      width: 32px; height: 32px;
+      border: 3px solid rgba(255,255,255,.12); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    .loader-text { color: #93b4d8; font-size: .88rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Login screen ───────────────────────────────────────────────── */
+    #login-screen {
+      position: fixed; inset: 0;
+      background: linear-gradient(145deg, #0a1929 0%, #0d2137 50%, #162d4a 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; z-index: 9000;
+    }
+    .login-card {
+      background: var(--white); border-radius: 20px; padding: 36px 40px;
+      max-width: 420px; width: 100%; box-shadow: var(--shadow-lg); text-align: center;
+    }
+    .login-logo-wrap {
+      width: 56px; height: 56px;
+      background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+      border-radius: 14px; display: inline-flex;
+      align-items: center; justify-content: center;
+      color: #fff; margin-bottom: 16px;
+    }
+    .login-logo-wrap svg { width: 26px; height: 26px; }
+    .login-title { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .login-subtitle { font-size: .85rem; color: var(--text-muted); margin-bottom: 24px; }
+    .login-features {
+      background: var(--bg); border-radius: 12px;
+      padding: 14px 16px; margin-bottom: 24px;
+      text-align: left; display: flex; flex-direction: column; gap: 10px;
+    }
+    .login-feat { display: flex; align-items: center; gap: 10px; font-size: .82rem; color: var(--text-muted); }
+    .login-feat-icon {
+      width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-feat-icon svg { width: 13px; height: 13px; }
+    .lfi-blue   { background: #eff6ff; color: #3b82f6; }
+    .lfi-green  { background: #f0fdf4; color: #10b981; }
+    .lfi-purple { background: #faf5ff; color: #a855f7; }
+    .lfi-amber  { background: #fffbeb; color: #d97706; }
+    .login-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 13px;
+      background: var(--navy); color: #fff;
+      border: none; border-radius: 10px;
+      font-size: .92rem; font-weight: 600; cursor: pointer;
+      transition: background .15s, transform .1s; margin-bottom: 16px;
+    }
+    .login-btn svg { width: 17px; height: 17px; }
+    .login-btn:hover:not(:disabled) { background: var(--navy-lite); transform: scale(1.01); }
+    .login-btn:disabled { opacity: .65; cursor: not-allowed; transform: none; }
+    .login-footer {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      font-size: .73rem; color: var(--text-muted);
+    }
+    .login-footer svg { width: 12px; height: 12px; }
+    .login-error {
+      margin-top: 12px; padding: 8px 12px;
+      background: #fef2f2; border: 1px solid #fecaca;
+      border-radius: 8px; color: #dc2626; font-size: .8rem; display: none;
+    }
+    .login-error.show { display: block; }
+    .guest-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 10px;
+      background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border); border-radius: 10px;
+      font-size: .85rem; cursor: pointer;
+      transition: background .15s, color .15s; margin-bottom: 12px;
+    }
+    .guest-btn svg { width: 15px; height: 15px; }
+    .guest-btn:hover { background: var(--bg); color: var(--text); }
+    .guest-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 7px; background: rgba(251,191,36,.12);
+      border: 1px solid rgba(251,191,36,.3); border-radius: 20px;
+      font-size: .63rem; color: #d97706; font-weight: 600; letter-spacing: .03em;
+    }
+
+    /* ── App layout ─────────────────────────────────────────────────── */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 272px; min-width: 260px; background: var(--navy);
+      display: flex; flex-direction: column;
+      overflow-y: auto; overflow-x: hidden; flex-shrink: 0;
+    }
+    .sb-header {
+      padding: 16px 16px 12px;
+      background: linear-gradient(160deg, #1a3d68 0%, var(--navy) 100%);
+      border-bottom: 1px solid rgba(255,255,255,.07); flex-shrink: 0;
+    }
+    .sb-logo { display: flex; align-items: center; gap: 10px; }
+    .sb-logo-icon {
+      width: 34px; height: 34px; background: var(--accent);
+      border-radius: var(--r-sm); display: flex;
+      align-items: center; justify-content: center; color: #fff; flex-shrink: 0;
+    }
+    .sb-logo-icon svg { width: 17px; height: 17px; }
+    .sb-logo-text h1 { font-size: .92rem; font-weight: 700; color: #fff; }
+    .sb-logo-text p  { font-size: .68rem; color: #7aabda; margin-top: 1px; }
+
+    /* User section */
+    .sb-user {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px; border-bottom: 1px solid rgba(255,255,255,.07); flex-shrink: 0;
+    }
+    .sb-user-avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; font-weight: 600; flex-shrink: 0; overflow: hidden;
+    }
+    .sb-user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .sb-user-info { flex: 1; min-width: 0; }
+    .sb-user-name {
+      font-size: .82rem; font-weight: 600; color: #e8f0fe;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sb-user-email {
+      font-size: .68rem; color: #6a8aaa;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sb-logout-btn {
+      width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      color: #6a8aaa; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, color .15s;
+    }
+    .sb-logout-btn svg { width: 13px; height: 13px; }
+    .sb-logout-btn:hover {
+      background: rgba(239,68,68,.15); color: #fca5a5;
+      border-color: rgba(239,68,68,.3);
+    }
+
+    /* Status */
+    .sb-status {
+      display: flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .72rem; color: #7aabda; flex-shrink: 0;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #4a6a8a; flex-shrink: 0; transition: background .3s;
+    }
+    .dot.online  { background: var(--success); box-shadow: 0 0 6px var(--success); }
+    .dot.offline { background: var(--danger); }
+
+    /* Sections */
+    .sb-section { padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.05); flex-shrink: 0; }
+    .sb-section-title {
+      display: flex; align-items: center; gap: 6px;
+      font-size: .65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: #5a8ab0; margin-bottom: 10px;
+    }
+    .sb-section-title svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .sb-field { margin-bottom: 8px; }
+    .sb-field:last-child { margin-bottom: 0; }
+    .sb-field label { display: block; font-size: .7rem; color: #7aabda; margin-bottom: 4px; }
+    .sb-field input, .sb-field textarea {
+      width: 100%; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.11); border-radius: 7px;
+      color: #dceeff; padding: 7px 10px; font-size: .81rem; font-family: inherit;
+      outline: none; transition: border .15s, background .15s;
+    }
+    .sb-field input::placeholder, .sb-field textarea::placeholder { color: #3a5a7a; }
+    .sb-field input:focus, .sb-field textarea:focus {
+      border-color: var(--accent); background: rgba(59,130,246,.09);
+    }
+    .sb-field textarea { resize: vertical; min-height: 90px; }
+    .resume-count { font-size: .65rem; color: #3a5a7a; margin-top: 4px; }
+
+    .sb-footer { padding: 10px 16px 16px; display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+    .sb-btn {
+      display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.11);
+      border-radius: 7px; color: #c0d8f0; font-size: .81rem; font-weight: 500;
+      cursor: pointer; transition: background .15s, border-color .15s, color .15s; text-align: left;
+    }
+    .sb-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .sb-btn:hover { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.2); color: #fff; }
+
+    /* Main */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .chat-header {
+      padding: 11px 18px; background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .chat-header-left { display: flex; align-items: center; gap: 10px; }
+    .chat-header-icon {
+      width: 30px; height: 30px; background: var(--accent-lt);
+      border-radius: var(--r-sm); display: flex;
+      align-items: center; justify-content: center; color: var(--accent);
+    }
+    .chat-header-icon svg { width: 15px; height: 15px; }
+    .chat-header h2 { font-size: .9rem; font-weight: 600; }
+    .session-badge {
+      font-size: .7rem; color: var(--text-muted);
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2px 10px;
+    }
+    .mob-toggle {
+      display: none; width: 30px; height: 30px;
+      border: 1px solid var(--border); border-radius: var(--r-sm);
+      background: var(--white); cursor: pointer;
+      align-items: center; justify-content: center; color: var(--text);
+    }
+    .mob-toggle svg { width: 15px; height: 15px; }
+    @media (max-width: 640px) {
+      .mob-toggle { display: flex; }
+      .sidebar {
+        position: fixed; z-index: 200; height: 100%;
+        transform: translateX(-100%); transition: transform .25s ease;
+      }
+      .sidebar.open { transform: translateX(0); box-shadow: var(--shadow); }
+      .message { max-width: 93%; }
+    }
+
+    /* Quick actions */
+    .quick-actions {
+      padding: 9px 16px; background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; gap: 7px; flex-wrap: wrap; flex-shrink: 0;
+    }
+    .qa-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 13px; border-radius: 20px; font-size: .77rem; font-weight: 500;
+      border: 1.5px solid var(--border); color: var(--text); background: var(--white);
+      cursor: pointer; transition: all .15s;
+    }
+    .qa-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .qa-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* Messages */
+    .messages {
+      flex: 1; overflow-y: auto; padding: 20px 16px;
+      display: flex; flex-direction: column; gap: 14px; background: var(--bg);
+    }
+    .message { display: flex; gap: 9px; max-width: 80%; }
+    .message.user      { align-self: flex-end; flex-direction: row-reverse; }
+    .message.assistant { align-self: flex-start; }
+    .avatar {
+      width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .message.user      .avatar { background: var(--navy); color: #fff; }
+    .message.assistant .avatar { background: var(--accent-lt); color: var(--accent); }
+    .avatar svg { width: 14px; height: 14px; }
+    .bubble { padding: 10px 14px; border-radius: var(--r); line-height: 1.6; font-size: .86rem; word-break: break-word; }
+    .message.user .bubble {
+      background: linear-gradient(135deg, var(--navy-lite), var(--navy));
+      color: #dceeff; border-radius: var(--r) var(--r) 4px var(--r); box-shadow: var(--shadow-sm);
+    }
+    .message.assistant .bubble {
+      background: var(--white); color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--r) var(--r) var(--r) 4px; box-shadow: var(--shadow-sm);
+    }
+    .bubble h2, .bubble h3 { margin: .7em 0 .3em; color: var(--navy); font-size: .9rem; }
+    .bubble strong { font-weight: 600; } .bubble em { font-style: italic; }
+    .bubble code { background: #f1f5f9; padding: 2px 5px; border-radius: 4px; font-family: 'SF Mono', Consolas, monospace; font-size: .78em; }
+    .bubble pre { background: #f1f5f9; padding: 10px 12px; border-radius: var(--r-sm); overflow-x: auto; margin: .5em 0; }
+    .bubble pre code { background: none; padding: 0; }
+    .bubble hr { border: none; border-top: 1px solid var(--border); margin: .6em 0; }
+    .bubble ul, .bubble ol { padding-left: 1.4em; margin: .4em 0; }
+    .bubble li { margin: .2em 0; }
+    .bubble a { color: var(--accent); }
+    .bubble p { margin: .25em 0; }
+    .bubble p:first-child { margin-top: 0; } .bubble p:last-child { margin-bottom: 0; }
+
+    /* Typing indicator */
+    .typing .bubble { padding: 13px 16px; }
+    .typing-dots { display: flex; gap: 5px; align-items: center; }
+    .typing-dots span { width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; animation: tdot .9s infinite; }
+    .typing-dots span:nth-child(2) { animation-delay: .2s; }
+    .typing-dots span:nth-child(3) { animation-delay: .4s; }
+    @keyframes tdot { 0%,60%,100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+
+    /* Input area */
+    .input-area { padding: 12px 16px 14px; background: var(--white); border-top: 1px solid var(--border); flex-shrink: 0; }
+    .input-row { display: flex; gap: 8px; align-items: flex-end; }
+    .input-wrap {
+      flex: 1; border: 1.5px solid var(--border); border-radius: var(--r);
+      background: var(--bg); overflow: hidden; transition: border-color .15s, box-shadow .15s;
+    }
+    .input-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59,130,246,.1); background: var(--white); }
+    .input-wrap textarea {
+      display: block; width: 100%; border: none; outline: none;
+      padding: 10px 14px; font-size: .86rem; font-family: inherit;
+      resize: none; max-height: 120px; min-height: 42px;
+      line-height: 1.5; background: transparent; color: var(--text);
+    }
+    .send-btn {
+      width: 42px; height: 42px; border-radius: var(--r); background: var(--navy);
+      border: none; color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, transform .1s; flex-shrink: 0;
+    }
+    .send-btn svg { width: 16px; height: 16px; }
+    .send-btn:hover:not(:disabled) { background: var(--navy-lite); transform: scale(1.04); }
+    .send-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
+    .input-hint { font-size: .67rem; color: var(--text-muted); margin-top: 5px; }
+
+    /* Welcome card */
+    .welcome {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 22px;
+      max-width: 500px; align-self: flex-start; box-shadow: var(--shadow);
+    }
+    .welcome-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
+    .welcome-icon {
+      width: 40px; height: 40px; border-radius: var(--r-sm); flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+      display: flex; align-items: center; justify-content: center; color: #fff;
+    }
+    .welcome-icon svg { width: 20px; height: 20px; }
+    .welcome-header h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .welcome-header p  { font-size: .74rem; color: var(--text-muted); }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .82rem; color: var(--text-muted); }
+    .feat-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feat-icon svg { width: 13px; height: 13px; }
+    .fi-blue   { background: #eff6ff; color: #3b82f6; }
+    .fi-green  { background: #f0fdf4; color: #10b981; }
+    .fi-amber  { background: #fffbeb; color: #d97706; }
+    .fi-purple { background: #faf5ff; color: #a855f7; }
+    .welcome-footer {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
+      font-size: .74rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px;
+    }
+    .welcome-footer svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 22px; right: 22px; background: var(--navy); color: #fff;
+      padding: 9px 16px; border-radius: var(--r-sm); font-size: .82rem;
+      opacity: 0; transition: opacity .25s, transform .25s; transform: translateY(6px);
+      pointer-events: none; z-index: 9999;
+      display: flex; align-items: center; gap: 7px; box-shadow: var(--shadow);
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast svg { width: 14px; height: 14px; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ── 1. Loading ─────────────────────────────────────────────────────────── -->
+<div id="loading-screen">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+    <div class="loader-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+      </svg>
+    </div>
+    <div class="loader-spinner"></div>
+    <p class="loader-text">Initialising…</p>
+  </div>
+</div>
+
+<!-- ── 2. Login ───────────────────────────────────────────────────────────── -->
+<div id="login-screen" style="display:none">
+  <div class="login-card">
+    <div class="login-logo-wrap">
+      <i data-lucide="briefcase"></i>
+    </div>
+    <div class="login-title">Job Placement Agent</div>
+    <div class="login-subtitle">Your AI-powered career assistant</div>
+
+    <div class="login-features">
+      <div class="login-feat">
+        <div class="login-feat-icon lfi-blue"><i data-lucide="search"></i></div>
+        <span>Find live job listings by role and location</span>
+      </div>
+      <div class="login-feat">
+        <div class="login-feat-icon lfi-green"><i data-lucide="bar-chart-2"></i></div>
+        <span>Analyse your resume and identify skill gaps</span>
+      </div>
+      <div class="login-feat">
+        <div class="login-feat-icon lfi-purple"><i data-lucide="mail"></i></div>
+        <span>Generate personalised cover letters instantly</span>
+      </div>
+      <div class="login-feat">
+        <div class="login-feat-icon lfi-amber"><i data-lucide="lightbulb"></i></div>
+        <span>Get tailored career advice and market insights</span>
+      </div>
+    </div>
+
+    <button class="login-btn" id="loginBtn" onclick="login()">
+      <i data-lucide="log-in"></i>
+      <span id="loginBtnText">Sign in to continue</span>
+    </button>
+
+    <button class="guest-btn" onclick="continueAsGuest()">
+      <i data-lucide="user"></i>
+      <span>Continue as Guest</span>
+    </button>
+
+    <div class="login-footer">
+      <i data-lucide="shield"></i>
+      Secured by <strong style="margin-left:3px">Auth0</strong>
+    </div>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ── 3. App ─────────────────────────────────────────────────────────────── -->
+<div id="app-screen" class="app" style="display:none">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">
+        <div class="sb-logo-icon"><i data-lucide="briefcase"></i></div>
+        <div class="sb-logo-text">
+          <h1>JobAgent</h1>
+          <p>AI Career Assistant</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Authenticated user -->
+    <div class="sb-user">
+      <div class="sb-user-avatar" id="userAvatar"></div>
+      <div class="sb-user-info">
+        <div class="sb-user-name"  id="userDisplayName">–</div>
+        <div class="sb-user-email" id="userDisplayEmail"></div>
+      </div>
+      <button class="sb-logout-btn" onclick="logout()" title="Sign out">
+        <i data-lucide="log-out"></i>
+      </button>
+    </div>
+
+    <div class="sb-status">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Connecting…</span>
+    </div>
+
+    <!-- Career profile -->
+    <div class="sb-section">
+      <div class="sb-section-title">
+        <i data-lucide="target"></i> Career Profile
+      </div>
+      <div class="sb-field">
+        <label>Target Role</label>
+        <input type="text" id="targetRole" placeholder="e.g. Data Engineer" oninput="saveUserInfo()" />
+      </div>
+      <div class="sb-field">
+        <label>Preferred Location</label>
+        <input type="text" id="targetCity" placeholder="e.g. New York, Remote" oninput="saveUserInfo()" />
+      </div>
+    </div>
+
+    <!-- Resume -->
+    <div class="sb-section">
+      <div class="sb-section-title">
+        <i data-lucide="file-text"></i> Resume
+      </div>
+      <div class="sb-field">
+        <textarea id="resumeText" rows="8"
+                  placeholder="Paste your resume here.&#10;&#10;Used for:&#10;• Skill analysis&#10;• Job matching&#10;• Cover letters"
+                  oninput="saveUserInfo()"></textarea>
+        <div class="resume-count" id="resumeCount"></div>
+      </div>
+    </div>
+
+    <div class="sb-footer">
+      <button class="sb-btn" onclick="newChat()">
+        <i data-lucide="plus-circle"></i> New Conversation
+      </button>
+      <button class="sb-btn" onclick="checkBackend()">
+        <i data-lucide="refresh-cw"></i> Retry Connection
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <button class="mob-toggle" onclick="toggleSidebar()">
+          <i data-lucide="menu"></i>
+        </button>
+        <div class="chat-header-icon">
+          <i data-lucide="message-square"></i>
+        </div>
+        <h2>Career Chat</h2>
+      </div>
+      <span class="session-badge" id="sessionLabel">Session: –</span>
+    </div>
+
+    <div class="quick-actions">
+      <button class="qa-btn" onclick="quickAction('jobs')">
+        <i data-lucide="search"></i> Find Jobs
+      </button>
+      <button class="qa-btn" onclick="quickAction('resume')">
+        <i data-lucide="bar-chart-2"></i> Analyse Resume
+      </button>
+      <button class="qa-btn" onclick="quickAction('cover')">
+        <i data-lucide="mail"></i> Cover Letter
+      </button>
+      <button class="qa-btn" onclick="quickAction('tips')">
+        <i data-lucide="lightbulb"></i> Career Tips
+      </button>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="welcome">
+        <div class="welcome-header">
+          <div class="welcome-icon"><i data-lucide="sparkles"></i></div>
+          <div>
+            <h3>Welcome to Job Placement Agent</h3>
+            <p>Your AI-powered career assistant</p>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><div class="feat-icon fi-blue"><i data-lucide="search"></i></div><span>Find relevant job listings by role and location</span></li>
+          <li><div class="feat-icon fi-green"><i data-lucide="bar-chart-2"></i></div><span>Analyse your resume and identify skill gaps</span></li>
+          <li><div class="feat-icon fi-amber"><i data-lucide="target"></i></div><span>Get match scores against job descriptions</span></li>
+          <li><div class="feat-icon fi-purple"><i data-lucide="mail"></i></div><span>Generate personalised cover letters instantly</span></li>
+        </ul>
+        <div class="welcome-footer">
+          <i data-lucide="arrow-left"></i>
+          Paste your resume in the sidebar, then ask me anything.
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-row">
+        <div class="input-wrap">
+          <textarea id="userInput" rows="1"
+                    placeholder="Ask about jobs, share your resume, request a cover letter…"
+                    onkeydown="handleKey(event)"
+                    oninput="autoResize(this)"></textarea>
+        </div>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Send message">
+          <i data-lucide="arrow-up"></i>
+        </button>
+      </div>
+      <div class="input-hint">Enter to send &nbsp;·&nbsp; Shift+Enter for new line</div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i data-lucide="check-circle"></i>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+// ── Config ────────────────────────────────────────────────────────────────
+// Values below are %%PLACEHOLDERS%% replaced at build time by inject-env.ps1
+// (local dev) or by build.js during the Vercel build pipeline.
+// Never hardcode secrets here — edit src/frontend/.env instead.
+const AUTH0_DOMAIN    = '%%AUTH0_DOMAIN%%';
+const AUTH0_CLIENT_ID = '%%AUTH0_CLIENT_ID%%';
+const AUTH0_AUDIENCE  = '%%AUTH0_AUDIENCE%%';
+const BACKEND_URL     = '%%BACKEND_URL%%';
+
+// ── Inline SVGs for dynamically injected content ──────────────────────────
+const SVG = {
+  user: `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  bot:  `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>`,
+  star: `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`,
+  chevron: `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`,
+};
+
+// ── State ─────────────────────────────────────────────────────────────────
+let auth0Client = null;
+let currentUser = null;
+let accessToken = null;
+let isGuest     = false;
+let sessionId   = localStorage.getItem('sessionId') || newSessionId();
+let isBusy      = false;
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+// Process all Lucide icons in the DOM (including hidden screens) synchronously,
+// then run the async Auth0 initialisation.
+lucide.createIcons();
+
+(async function boot() {
+  try {
+    const redirectUri = window.location.href.split('?')[0].split('#')[0];
+
+    auth0Client = await auth0.createAuth0Client({
+      domain:   AUTH0_DOMAIN,
+      clientId: AUTH0_CLIENT_ID,
+      authorizationParams: {
+        redirect_uri: redirectUri,
+        audience: AUTH0_AUDIENCE,
+        scope: 'openid profile email',
+      },
+      cacheLocation: 'localstorage',
+    });
+
+    // Handle redirect callback (Auth0 appends ?code=&state= after login)
+    if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
+      try {
+        await auth0Client.handleRedirectCallback();
+      } catch (e) {
+        console.error('Redirect callback error:', e);
+        setLoginError('Sign-in failed. Please try again.');
+      }
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    hide('loading-screen');
+
+    if (await auth0Client.isAuthenticated()) {
+      await enterApp();
+    } else {
+      show('login-screen', 'flex');
+    }
+  } catch (err) {
+    console.error('Auth0 init error:', err);
+    hide('loading-screen');
+    show('login-screen', 'flex');
+    setLoginError('Authentication service unavailable. Please try again later.');
+  }
+})();
+
+// ── Auth actions ──────────────────────────────────────────────────────────
+async function login() {
+  document.getElementById('loginBtn').disabled = true;
+  document.getElementById('loginBtnText').textContent = 'Redirecting…';
+  try {
+    await auth0Client.loginWithRedirect();
+  } catch (err) {
+    console.error('Login redirect error:', err);
+    setLoginError('Unable to open sign-in page. Please try again.');
+    document.getElementById('loginBtn').disabled = false;
+    document.getElementById('loginBtnText').textContent = 'Sign in to continue';
+  }
+}
+
+async function continueAsGuest() {
+  isGuest = true;
+  hide('login-screen');
+  await enterApp(true);
+}
+
+async function logout() {
+  localStorage.removeItem('sessionId');
+  if (isGuest) {
+    isGuest = false;
+    currentUser = null;
+    accessToken = null;
+    hide('app-screen');
+    show('login-screen', 'flex');
+    return;
+  }
+  await auth0Client.logout({
+    logoutParams: {
+      returnTo: window.location.href.split('?')[0].split('#')[0],
+    },
+  });
+}
+
+async function enterApp(guest = false) {
+  if (!guest) {
+    try {
+      [currentUser, accessToken] = await Promise.all([
+        auth0Client.getUser(),
+        auth0Client.getTokenSilently(),
+      ]);
+    } catch (err) {
+      console.error('Failed to get user/token:', err);
+    }
+  }
+
+  show('app-screen', 'flex');
+  renderSidebarUser();
+
+  document.getElementById('targetRole').value = localStorage.getItem('targetRole') || '';
+  document.getElementById('targetCity').value = localStorage.getItem('targetCity') || '';
+  document.getElementById('resumeText').value = localStorage.getItem('resumeText') || '';
+  updateResumeCount();
+  updateSessionLabel();
+  checkBackend();
+}
+
+function renderSidebarUser() {
+  const name    = isGuest ? 'Guest' : (currentUser?.name || currentUser?.nickname || currentUser?.email || 'User');
+  const pic     = isGuest ? null : currentUser?.picture;
+  const initial = name.charAt(0).toUpperCase();
+
+  const avatarEl = document.getElementById('userAvatar');
+  if (pic) {
+    avatarEl.innerHTML = `<img src="${escHtml(pic)}" alt="${escHtml(name)}"
+      onerror="this.style.display='none';this.parentNode.textContent='${initial}'">`;
+  } else {
+    avatarEl.textContent = initial;
+  }
+  document.getElementById('userDisplayName').innerHTML = isGuest
+    ? `Guest <span class="guest-badge">Guest</span>`
+    : escHtml(name);
+  document.getElementById('userDisplayEmail').textContent = isGuest
+    ? 'Sign in for full access'
+    : (currentUser?.email || '');
+
+  const logoutBtn = document.querySelector('.sb-logout-btn');
+  if (logoutBtn) {
+    logoutBtn.title = isGuest ? 'Sign in' : 'Sign out';
+    logoutBtn.innerHTML = isGuest
+      ? `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`
+      : `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
+  }
+}
+
+function setLoginError(msg) {
+  const el = document.getElementById('loginError');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+// ── REST transport ────────────────────────────────────────────────────────
+async function apiCall(path, body, opts = {}) {
+  const { timeoutMs = 30_000 } = opts;
+
+  // Rebuild headers on each attempt so a refreshed token is always used
+  const makeInit = () => {
+    const headers = {};
+    if (body)        headers['Content-Type']  = 'application/json';
+    if (accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+    return {
+      method:  body ? 'POST' : 'GET',
+      headers,
+      signal:  AbortSignal.timeout(timeoutMs),
+      ...(body ? { body: JSON.stringify(body) } : {}),
+    };
+  };
+
+  let resp = await fetch(`${BACKEND_URL}${path}`, makeInit());
+
+  // On 401: silently refresh token and retry once (authenticated users only)
+  if (resp.status === 401 && auth0Client && !isGuest) {
+    try {
+      accessToken = await auth0Client.getTokenSilently({ cacheMode: 'off' });
+      resp = await fetch(`${BACKEND_URL}${path}`, makeInit());
+    } catch { /* fall through to error handler */ }
+  }
+
+  const json = await resp.json().catch(() => null);
+  if (!resp.ok || !json) {
+    const msg = json?.error?.message || `HTTP ${resp.status}: ${resp.statusText}`;
+    throw Object.assign(new Error(msg), { httpStatus: resp.status, apiError: json?.error });
+  }
+  if (!json.success) {
+    const msg = json?.error?.message || 'Unknown server error';
+    throw Object.assign(new Error(msg), { httpStatus: resp.status, apiError: json?.error });
+  }
+  return json.data;
+}
+
+// ── Session ───────────────────────────────────────────────────────────────
+function newSessionId() {
+  const id = 'sess-' + Math.random().toString(36).slice(2, 10);
+  localStorage.setItem('sessionId', id);
+  return id;
+}
+function updateSessionLabel() {
+  document.getElementById('sessionLabel').textContent = 'Session: ' + sessionId.slice(0, 10) + '…';
+}
+function newChat() {
+  sessionId = newSessionId();
+  updateSessionLabel();
+  document.getElementById('messages').innerHTML = `
+    <div class="welcome">
+      <div class="welcome-header">
+        <div class="welcome-icon">${SVG.star}</div>
+        <div>
+          <h3>New conversation started</h3>
+          <p>Your profile and resume are still saved</p>
+        </div>
+      </div>
+      <div class="welcome-footer">
+        ${SVG.chevron}
+        Use the quick action buttons above or type below to get started.
+      </div>
+    </div>`;
+  toggleSidebar(false);
+}
+function toggleSidebar(forceClose) {
+  const sb = document.getElementById('sidebar');
+  if (forceClose === false) { sb.classList.remove('open'); return; }
+  sb.classList.toggle('open');
+}
+
+// ── Persistence ───────────────────────────────────────────────────────────
+function saveUserInfo() {
+  localStorage.setItem('targetRole', document.getElementById('targetRole').value);
+  localStorage.setItem('targetCity', document.getElementById('targetCity').value);
+  localStorage.setItem('resumeText', document.getElementById('resumeText').value);
+  updateResumeCount();
+}
+function updateResumeCount() {
+  const len = document.getElementById('resumeText').value.length;
+  document.getElementById('resumeCount').textContent = len > 0 ? `${len.toLocaleString()} characters loaded` : '';
+}
+
+// ── Health check ──────────────────────────────────────────────────────────
+async function checkBackend() {
+  const dot  = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  dot.className    = 'dot';
+  text.textContent = 'Connecting…';
+  try {
+    const data = await apiCall('/api/health', null, { timeoutMs: 6_000 });
+    dot.className    = data.status === 'healthy' ? 'dot online' : 'dot offline';
+    text.textContent = data.status === 'healthy' ? `Connected (v${data.version})` : 'Unexpected status';
+  } catch (err) {
+    dot.className    = 'dot offline';
+    text.textContent = 'Service offline';
+    console.warn('Health check failed:', err.message);
+  }
+}
+
+// ── Markdown renderer ─────────────────────────────────────────────────────
+function md(raw) {
+  let t = raw.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  t = t.replace(/```[\w]*\n?([\s\S]*?)```/g, (_,c) => `<pre><code>${c.trim()}</code></pre>`);
+  t = t.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+  t = t.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+  t = t.replace(/^# (.+)$/gm,   '<h2>$1</h2>');
+  t = t.replace(/^---+$/gm, '<hr>');
+  t = t.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  t = t.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  t = t.replace(/\*(.+?)\*/g,     '<em>$1</em>');
+  t = t.replace(/`([^`]+)`/g,     '<code>$1</code>');
+  t = t.replace(/((?:^[\-\*•] .+\n?)+)/gm, m => {
+    const items = m.trim().split('\n').map(l => `<li>${l.replace(/^[\-\*•]\s*/,'').trim()}</li>`).join('');
+    return `<ul>${items}</ul>`;
+  });
+  t = t.replace(/((?:^\d+\.\s+.+\n?)+)/gm, m => {
+    const items = m.trim().split('\n').map(l => `<li>${l.replace(/^\d+\.\s*/,'').trim()}</li>`).join('');
+    return `<ol>${items}</ol>`;
+  });
+  t = t.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+  return `<p>${t}</p>`;
+}
+function escHtml(t) {
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Message rendering ─────────────────────────────────────────────────────
+function appendMessage(role, content) {
+  const msgs    = document.getElementById('messages');
+  const div     = document.createElement('div');
+  div.className = `message ${role}`;
+  div.innerHTML = `
+    <div class="avatar">${role === 'user' ? SVG.user : SVG.bot}</div>
+    <div class="bubble">${role === 'assistant' ? md(content) : escHtml(content)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const div  = document.createElement('div');
+  div.className = 'message assistant typing';
+  div.id        = 'typingIndicator';
+  div.innerHTML = `
+    <div class="avatar">${SVG.bot}</div>
+    <div class="bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() {
+  document.getElementById('typingIndicator')?.remove();
+}
+
+// ── Send message ──────────────────────────────────────────────────────────
+async function sendMessage(overrideText) {
+  if (isBusy) return;
+  const textarea = document.getElementById('userInput');
+  const text     = (overrideText || textarea.value).trim();
+  if (!text) return;
+
+  appendMessage('user', text);
+  if (!overrideText) { textarea.value = ''; autoResize(textarea); }
+
+  // Enrich with resume + name context when relevant
+  let enriched   = text;
+  const resume   = document.getElementById('resumeText').value.trim();
+  const userName = isGuest ? '' : (currentUser?.name || currentUser?.email || '');
+  const keywords = ['resume','cv','analyse','analyze','cover letter','skill','gap'];
+  if (resume && keywords.some(k => text.toLowerCase().includes(k))) {
+    const nameCtx = userName ? `\nApplicant Name: ${userName}` : '';
+    enriched = `${text}${nameCtx}\n\n[Context — My Resume]:\n${resume.slice(0, 3000)}`;
+  }
+
+  isBusy = true;
+  document.getElementById('sendBtn').disabled = true;
+  showTyping();
+
+  try {
+    // Stream token-by-token via SSE for instant perceived response
+    await streamResponse(enriched);
+  } catch (err) {
+    // SSE failed — fall back to regular JSON endpoint
+    removeTyping();
+    try {
+      const chatEndpoint = isGuest ? '/api/chat/public' : '/api/chat';
+      const data = await apiCall(chatEndpoint, { message: enriched, session_id: sessionId }, { timeoutMs: 120_000 });
+      appendMessage('assistant', data.response || 'No response received.');
+    } catch (fallback) {
+      handleChatError(fallback);
+    }
+  } finally {
+    isBusy = false;
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('userInput').focus();
+  }
+}
+
+// ── Streaming response (SSE) ──────────────────────────────────────────────────
+async function streamResponse(messageText) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (!isGuest && accessToken) headers['Authorization'] = `Bearer ${accessToken}`;
+
+  const resp = await fetch(`${BACKEND_URL}/api/chat/stream`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ message: messageText, session_id: sessionId }),
+    signal: AbortSignal.timeout(120_000),
+  });
+
+  if (!resp.ok) {
+    const json = await resp.json().catch(() => null);
+    throw Object.assign(
+      new Error(json?.error?.message || `HTTP ${resp.status}`),
+      { httpStatus: resp.status, apiError: json?.error }
+    );
+  }
+
+  removeTyping();
+  const msgDiv  = appendMessage('assistant', '');
+  const bubble  = msgDiv.querySelector('.bubble');
+  const msgs    = document.getElementById('messages');
+  let fullText  = '';
+  let buffer    = '';
+  const decoder = new TextDecoder();
+  const reader  = resp.body.getReader();
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const parts = buffer.split('\n\n');
+      buffer = parts.pop();
+      for (const part of parts) {
+        if (!part.startsWith('data: ')) continue;
+        let data;
+        try { data = JSON.parse(part.slice(6)); } catch { continue; }
+        if (data.error) throw new Error(data.message || 'Stream error');
+        if (data.token) {
+          fullText += data.token;
+          bubble.innerHTML = md(fullText);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
+
+  if (!fullText) bubble.innerHTML = md("I'm sorry, I couldn't generate a response. Please try again.");
+}
+
+function handleChatError(err) {
+  if (err.name === 'TimeoutError') {
+    appendMessage('assistant', '**Request timed out.** The agent is processing a complex query — please try again.');
+  } else if (err.httpStatus === 429 || err.apiError?.code === 'LLM_RATE_LIMITED') {
+    appendMessage('assistant', '**Rate limit reached.** Please wait a moment and try again.');
+  } else if (err.httpStatus === 401) {
+    if (isGuest) {
+      appendMessage('assistant', '**Sign in required.** Please click the sign-in button in the sidebar to access this feature.');
+    } else {
+      appendMessage('assistant', '**Session expired.** Signing you out…');
+      setTimeout(() => logout(), 2000);
+    }
+  } else if (!err.httpStatus || err.httpStatus >= 500) {
+    appendMessage('assistant', '**The AI service is temporarily unavailable.** Please try again in a moment.');
+  } else {
+    appendMessage('assistant', `**Error:** ${escHtml(err.message)}`);
+  }
+}
+
+// ── Quick actions ─────────────────────────────────────────────────────────
+function quickAction(type) {
+  const role   = document.getElementById('targetRole').value.trim();
+  const city   = document.getElementById('targetCity').value.trim();
+  const resume = document.getElementById('resumeText').value.trim();
+  const prompts = {
+    jobs:   role && city ? `Find me ${role} jobs in ${city}`
+          : role         ? `Find me ${role} job openings`
+          : 'Help me find relevant job listings. What information do you need?',
+    resume: resume ? `Please analyse my resume${role ? ` and compare it to ${role} job requirements` : ''}`
+          : 'I want you to analyse my resume. How should I share it with you?',
+    cover:  resume && role
+          ? `Generate a cover letter for a ${role} position${city ? ` in ${city}` : ''}`
+          : 'Help me write a personalised cover letter. What details do you need?',
+    tips:   role ? `What are the top skills and career advice for a ${role} role${city ? ` in ${city}` : ' in the current market'}?`
+          : 'What are the most in-demand tech skills in the current job market?',
+  };
+  if (prompts[type]) sendMessage(prompts[type]);
+}
+
+// ── UI helpers ────────────────────────────────────────────────────────────
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 130) + 'px';
+}
+function showToast(msg) {
+  document.getElementById('toastMsg').textContent = msg;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function show(id, display = 'block') { document.getElementById(id).style.display = display; }
+function hide(id)                    { document.getElementById(id).style.display = 'none';  }
+</script>
+</body>
+</html>

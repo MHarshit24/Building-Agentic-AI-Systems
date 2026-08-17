@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = http://myrepos.stackroute.niit.com/1986713_Harshit/s5-build-self-correcting-agents-with-reflection-using-langgraph.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	vscode-merge-base = origin/main
+	merge = refs/heads/main

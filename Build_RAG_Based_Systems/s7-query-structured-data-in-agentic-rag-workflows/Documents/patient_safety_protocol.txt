@@ -1,0 +1,11 @@
+Patient Safety and Readmission Prevention
+High-Risk Factors for Readmission:
+    1. Age 65+ (increased monitoring required)
+    2. Length of stay >7 days (higher complexity)
+    3. Emergency admissions (often unplanned)
+Preventive Measures:
+    • Post-discharge follow-up within 48 hours for high-risk patients
+    • Care transition coordinators for patients 65+
+    • Patient education before discharge
+    • Medication reconciliation
+Regulatory Compliance: CMS (Centers for Medicare & Medicaid) penalizes hospitals with readmission rates exceeding national benchmarks by >3%.

@@ -1,0 +1,6 @@
+# Ignore local frontend environment variables and dev artifacts
+frontend/.env
+frontend/node_modules/
+
+# Optional build outputs
+frontend/dist/

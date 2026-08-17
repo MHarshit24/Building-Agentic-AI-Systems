@@ -1,0 +1,10 @@
+# Streamlit / gRPC legacy app — local use only, not deployed to Vercel.
+# Excluding these prevents Vercel from auto-detecting a Python project
+# and overriding the Node.js build pipeline defined in vercel.json.
+app.py
+requirements.txt
+
+# Local dev artefacts
+inject-env.ps1
+index.dist.html
+.env

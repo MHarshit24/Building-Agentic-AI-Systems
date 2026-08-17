@@ -1,0 +1,22 @@
+Client Success Story - Portfolio Optimization
+
+Client Profile:
+Name: Sarah Johnson
+Email: sarah.j@email.com
+Account Number: ACC-789456
+Phone: (555) 987-6543
+
+Challenge:
+Sarah, age 45, had an overly conservative portfolio yielding only 2% annually.
+She needed better returns to meet retirement goals.
+
+Solution:
+We transitioned her to a moderate risk profile:
+- Initial Portfolio Value: $500,000
+- New Allocation: 60% equities, 40% bonds
+- Target Annual Return: 6-7%
+
+Results (12 months):
+- Actual Return: 8.2%
+- Portfolio Value: $541,000
+- Volatility: Within acceptable range

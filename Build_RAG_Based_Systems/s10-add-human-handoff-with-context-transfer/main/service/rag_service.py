@@ -1,0 +1,270 @@
+"""
+RAG Service Module
+Provides shared services for RAG pipeline initialization and management.
+"""
+
+import os
+import sys
+import logging
+from pathlib import Path
+from typing import Optional, Dict
+from urllib.parse import quote_plus
+from dotenv import load_dotenv
+from llama_index.core import Settings, VectorStoreIndex, StorageContext
+from llama_index.llms.azure_openai import AzureOpenAI
+from llama_index.embeddings.azure_openai import AzureOpenAIEmbedding
+from llama_index.vector_stores.postgres import PGVectorStore
+from main.service.query_engine import create_query_engine
+
+logger = logging.getLogger(__name__)
+
+# Global instances
+_index: Optional[VectorStoreIndex] = None
+_query_engine_cache: Dict[int, any] = {}
+_llm = None
+_embed_model = None
+
+
+def _load_env():
+    """
+    Load environment variables preserving secrets from root .env,
+    then loading project .env with override.
+
+    - Root .env (Building_Agentic_AI_Systems/.env) loaded first for secrets:
+      AZURE_OPENAI_API_KEY, AZURE_OPENAI_ENDPOINT, DB_PASSWORD,
+      LLAMA_CLOUD_API_KEY, LANGFUSE_SECRET_KEY, LANGFUSE_PUBLIC_KEY,
+      LANGFUSE_HOST, SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD,
+      APPLICATION_EMAIL, SUPPORT_EMAIL
+    - Project .env loaded second with override=True for deployment names,
+      DB config, API server settings, etc.
+    - Secrets restored after second load so they are never overwritten.
+    - Conflicting PostgreSQL env vars from root .env are removed to avoid
+      mix-ups with the project DB config.
+    """
+    if "pytest" in sys.modules:
+        return
+
+    # Locate root .env (Building_Agentic_AI_Systems/.env)
+    # This file: <project>/main/service/rag_service.py -> parents[4] = root
+    base_dir = Path(__file__).resolve().parents[4]
+    base_env_path = base_dir / ".env"
+
+    if base_env_path.exists():
+        load_dotenv(dotenv_path=base_env_path)
+        logger.debug(f"Loaded root .env from {base_env_path}")
+    else:
+        load_dotenv()
+        logger.warning(f"Root .env not found at {base_env_path}, falling back to default load_dotenv()")
+
+    # Preserve secret values before loading project .env
+    db_password = os.getenv("DB_PASSWORD")
+    azure_api_key = os.getenv("AZURE_OPENAI_API_KEY")
+    azure_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
+    llama_cloud_api_key = os.getenv("LLAMA_CLOUD_API_KEY")
+    langfuse_secret_key = os.getenv("LANGFUSE_SECRET_KEY")
+    langfuse_public_key = os.getenv("LANGFUSE_PUBLIC_KEY")
+    langfuse_host = os.getenv("LANGFUSE_HOST")
+    smtp_host = os.getenv("SMTP_HOST")
+    smtp_port = os.getenv("SMTP_PORT")
+    smtp_username = os.getenv("SMTP_USERNAME")
+    smtp_password = os.getenv("SMTP_PASSWORD")
+    application_email = os.getenv("APPLICATION_EMAIL")
+    support_email = os.getenv("SUPPORT_EMAIL")
+
+    # Locate project .env (s10 project root/.env)
+    # This file: <project>/main/service/rag_service.py -> parents[2] = project root
+    proj_dir = Path(__file__).resolve().parents[2]
+    proj_env_path = proj_dir / ".env"
+
+    if proj_env_path.exists():
+        load_dotenv(dotenv_path=proj_env_path, override=True)
+        logger.debug(f"Loaded project .env from {proj_env_path}")
+    else:
+        load_dotenv()
+        logger.warning(f"Project .env not found at {proj_env_path}, falling back to default load_dotenv()")
+
+    # Restore preserved secrets so project .env cannot overwrite them
+    if db_password:
+        os.environ["DB_PASSWORD"] = db_password
+    if azure_api_key:
+        os.environ["AZURE_OPENAI_API_KEY"] = azure_api_key
+    if azure_endpoint:
+        os.environ["AZURE_OPENAI_ENDPOINT"] = azure_endpoint
+    if llama_cloud_api_key:
+        os.environ["LLAMA_CLOUD_API_KEY"] = llama_cloud_api_key
+    if langfuse_secret_key:
+        os.environ["LANGFUSE_SECRET_KEY"] = langfuse_secret_key
+    if langfuse_public_key:
+        os.environ["LANGFUSE_PUBLIC_KEY"] = langfuse_public_key
+    if langfuse_host:
+        os.environ["LANGFUSE_HOST"] = langfuse_host
+    if smtp_host:
+        os.environ["SMTP_HOST"] = smtp_host
+    if smtp_port:
+        os.environ["SMTP_PORT"] = smtp_port
+    if smtp_username:
+        os.environ["SMTP_USERNAME"] = smtp_username
+    if smtp_password:
+        os.environ["SMTP_PASSWORD"] = smtp_password
+    if application_email:
+        os.environ["APPLICATION_EMAIL"] = application_email
+    if support_email:
+        os.environ["SUPPORT_EMAIL"] = support_email
+
+    # Remove conflicting PostgreSQL variables that may come from root .env
+    conflicting_pg_vars = [
+        "DATABASE_URL", "POSTGRES_URL", "PGHOST", "PGPORT",
+        "PGUSER", "PGPASSWORD", "PGDATABASE",
+    ]
+    for var in conflicting_pg_vars:
+        os.environ.pop(var, None)
+
+
+def initialize_services():
+    """Initialize all services (LLM, embeddings, index, query engine)."""
+    global _index, _query_engine_cache, _llm, _embed_model
+    
+    if _index is not None:
+        logger.info("Services already initialized, reusing existing instances")
+        return
+    
+    _load_env()
+    
+    # Configure Azure OpenAI
+    logger.info("Initializing Azure OpenAI services...")
+    _llm = AzureOpenAI(
+        model=os.getenv('AZURE_OPENAI_LLM_MODEL', 'gpt-4o-mini'),
+        deployment_name=os.getenv('AZURE_OPENAI_LLM_DEPLOYMENT'),
+        api_key=os.getenv('AZURE_OPENAI_API_KEY'),
+        azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'),
+        api_version=os.getenv('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
+    )
+    
+    _embed_model = AzureOpenAIEmbedding(
+        model=os.getenv('AZURE_OPENAI_EMBEDDING_MODEL', 'text-embedding-3-small'),
+        deployment_name=os.getenv('AZURE_OPENAI_EMBEDDING_DEPLOYMENT'),
+        api_key=os.getenv('AZURE_OPENAI_API_KEY'),
+        azure_endpoint=os.getenv('AZURE_OPENAI_ENDPOINT'),
+        api_version=os.getenv('AZURE_OPENAI_API_VERSION', '2024-02-15-preview')
+    )
+    
+    Settings.llm = _llm
+    Settings.embed_model = _embed_model
+    
+    # Load or create index
+    _index = load_or_create_index(_embed_model)
+    
+    # Initialize query engine cache
+    _query_engine_cache = {}
+    
+    logger.info("✓ All services initialized successfully")
+
+
+def load_or_create_index(embed_model) -> VectorStoreIndex:
+    """Load existing index from PostgreSQL or create a new one."""
+    logger.info("Loading or creating vector index...")
+    
+    # Initialize PGVector store
+    # quote_plus applied to DB_PASSWORD to handle special characters safely
+    vector_store = PGVectorStore.from_params(
+        database=os.getenv('DB_NAME'),
+        host=os.getenv('DB_HOST'),
+        password=quote_plus(os.getenv('DB_PASSWORD', '')),
+        port=os.getenv('DB_PORT'),
+        user=os.getenv('DB_USER'),
+        table_name=os.getenv('DB_TABLE_NAME', 'handoff_vectors'),
+        embed_dim=1536
+    )
+    
+    storage_context = StorageContext.from_defaults(vector_store=vector_store)
+    
+    # Try to load existing index
+    try:
+        index = VectorStoreIndex.from_vector_store(
+            vector_store=vector_store,
+            embed_model=embed_model
+        )
+        logger.info("✓ Loaded existing index from PostgreSQL")
+        return index
+    except Exception as e:
+        logger.info(f"Could not load existing index: {e}")
+        logger.info("Creating new empty index...")
+        index = VectorStoreIndex(
+            nodes=[],
+            storage_context=storage_context,
+            embed_model=embed_model
+        )
+        logger.info("✓ Created new empty index")
+        return index
+
+
+def get_index() -> VectorStoreIndex:
+    """Get the vector index instance."""
+    if _index is None:
+        initialize_services()
+    return _index
+
+
+def get_query_engine(similarity_top_k: int = 2):
+    """
+    Get or create a query engine instance with specified similarity_top_k.
+    
+    Args:
+        similarity_top_k: Number of top similar nodes to retrieve
+        
+    Returns:
+        QueryEngine instance (cached per similarity_top_k value)
+    """
+    if _index is None:
+        initialize_services()
+    
+    # Return cached query engine if available
+    if similarity_top_k in _query_engine_cache:
+        return _query_engine_cache[similarity_top_k]
+    
+    # Create new query engine and cache it
+    query_engine = create_query_engine(_index, _llm, similarity_top_k=similarity_top_k)
+    _query_engine_cache[similarity_top_k] = query_engine
+    logger.debug(f"Cached query engine for similarity_top_k={similarity_top_k}")
+    
+    return query_engine
+
+
+def get_embed_model():
+    """Get the embedding model instance."""
+    if _embed_model is None:
+        initialize_services()
+    return _embed_model
+
+
+def get_llm():
+    """Get the LLM instance."""
+    if _llm is None:
+        initialize_services()
+    return _llm
+
+
+def add_documents_to_index(documents):
+    """Add new documents to the existing index."""
+    global _index, _query_engine_cache
+    
+    if _index is None:
+        initialize_services()
+    
+    logger.info(f"Adding {len(documents)} document(s) to index...")
+    
+    for i, doc in enumerate(documents, 1):
+        try:
+            _index.insert(doc)
+            logger.info(f"  Inserted document {i}/{len(documents)}")
+        except Exception as e:
+            logger.error(f"Error inserting document {i}: {e}")
+            raise
+    
+    logger.info("✓ Documents added to index successfully")
+    
+    # Clear query engine cache since index has been updated
+    _query_engine_cache.clear()
+    logger.debug("Cleared query engine cache after index update")
+    
+    return {"message": f"Successfully indexed {len(documents)} document(s)"}

@@ -1,0 +1,12 @@
+Healthcare Quality Metrics - 2025 Standards
+Readmission Rate Targets:
+    • Cardiology: Target <12% (industry benchmark: 15%)
+    • Orthopedics: Target <8% (industry benchmark: 10%)
+    • Emergency: Target <5% (industry benchmark: 7%)
+    • Pediatrics: Target <3% (industry benchmark: 4%)
+Bed Utilization Targets: Optimal utilization range is 75-85%. Below 75% indicates underutilization; above 85% risks overcrowding and reduced care quality.
+Average Length of Stay (ALOS) Goals:
+    • Cardiology: 4.5 days
+    • Orthopedics: 6.0 days
+    • Emergency: 1.5 days
+    • Pediatrics: 3.0 days

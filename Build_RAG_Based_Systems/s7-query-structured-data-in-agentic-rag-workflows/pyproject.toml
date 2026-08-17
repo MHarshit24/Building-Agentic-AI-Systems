@@ -1,0 +1,20 @@
+[project]
+name = "demo-3-healthcare-analytics-platform"
+version = "0.1.0"
+description = "Healthcare Analytics Platform - Agentic RAG System"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-index-core==0.12.52.post1",
+    "llama-index-llms-azure-openai==0.3.4",
+    "llama-index-embeddings-azure-openai==0.3.9",
+    "llama-index-readers-database==0.4.0",
+    "llama-index-vector-stores-postgres==0.5.5",
+    "sqlalchemy==2.0.45",
+    "psycopg2-binary==2.9.11",
+    "python-dotenv",
+    "llama-index-agent-openai==0.4.12",
+    "fastapi",
+    "uvicorn",
+    "python-multipart"
+]

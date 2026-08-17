@@ -1,0 +1,13 @@
+[project]
+name = "quick-commerce"
+version = "0.1.0"
+description = "Support Agent with Memory for Quick Commerce Solution"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.121.0",
+    "uvicorn[standard]==0.38.0",
+    "langgraph==1.0.0",
+    "langchain-core==1.0.1",
+    "pydantic==2.12.4",
+]

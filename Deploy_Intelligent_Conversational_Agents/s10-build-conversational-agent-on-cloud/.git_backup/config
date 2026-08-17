@@ -1,0 +1,13 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[remote "origin"]
+	url = https://myrepos.stackroute.niit.com/1986713_Harshit/practice-1-built-a-chat-solution-in-azure-ai-studio-with-document-analysis-and-function-calling
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/master

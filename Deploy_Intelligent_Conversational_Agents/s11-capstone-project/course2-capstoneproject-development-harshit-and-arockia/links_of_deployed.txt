@@ -1,0 +1,2 @@
+API -> https://job-agent-backend-nine.vercel.app/docs
+UI -> https://job-agent-frontend-seven.vercel.app/

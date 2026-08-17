@@ -1,0 +1,9 @@
+# Streamlit UI
+streamlit>=1.35.0
+
+# gRPC Python client — connects to the backend gRPC server (port 50051)
+# The proto stubs are imported from src/backend/proto/ at runtime.
+grpcio>=1.62.0,<2.0.0
+
+# Environment management
+python-dotenv>=1.0.1

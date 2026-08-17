@@ -1,0 +1,23 @@
+[project]
+name = "diet-counselling-assistant"
+version = "1.0.0"
+description = "Personal Diet Counselling Assistant - RAG system using LlamaIndex, Azure OpenAI, and PostgreSQL with PGVector"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "llama-index==0.14.8",
+    "llama-index-llms-azure-openai==0.4.2",
+    "llama-index-embeddings-azure-openai==0.4.1",
+    "llama-index-vector-stores-postgres==0.7.1",
+    "fastapi==0.121.0",
+    "uvicorn==0.38.0",
+    "pydantic>=2.9.0",
+    "python-multipart==0.0.20",
+    # Configuration
+    "python-dotenv==1.2.1",
+    # Testing
+    "requests==2.31.0",
+    "pytest==8.0.0",
+    "pytest-asyncio==0.21.0",
+]
+

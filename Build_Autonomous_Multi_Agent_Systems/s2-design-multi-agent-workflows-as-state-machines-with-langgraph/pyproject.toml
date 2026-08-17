@@ -1,0 +1,14 @@
+[project]
+name = "multi-agent-loan-application"
+version = "0.1.0"
+description = "Multi-Agent Loan Application Assessment System using LangGraph"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi==0.121.0",
+  "pydantic==2.12.4",
+  "uvicorn[standard]==0.38.0",
+  "langgraph==1.0.0",
+  "langchain-core==1.0.1",
+  "langchain-openai==1.0.0",
+]

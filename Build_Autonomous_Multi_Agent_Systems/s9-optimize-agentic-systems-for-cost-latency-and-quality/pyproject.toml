@@ -1,0 +1,14 @@
+[project]
+name = "customer-support-ticket-optimization-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.129.0",
+    "langchain-openai>=0.3.23",
+    "litellm[proxy]>=1.9.4",
+    "openai>=1.83.0",
+    "python-dotenv>=1.1.1",
+    "uvicorn>=0.40.0",
+]
