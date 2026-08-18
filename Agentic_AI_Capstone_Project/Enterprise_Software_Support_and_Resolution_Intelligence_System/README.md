@@ -159,6 +159,14 @@ pip install -r requirements.txt
 alembic upgrade head
 python scripts/seed_synthetic_data.py   # idempotent — seeds course tables + demo user roster, see §3
 
+# Windows only — Redis is provided by Memurai (see Prerequisites above). Before starting the
+# backend, open PowerShell as Administrator and check whether it's already running:
+#   Get-Service Memurai
+# If it isn't, start it:
+#   Start-Service Memurai
+# When you're done working, you can stop it again:
+#   Stop-Service Memurai
+
 # Windows only — the Postgres checkpointer needs SelectorEventLoop, which uvicorn's own
 # --loop flag must be told about explicitly (see §23 for why):
 uvicorn app.main:app --reload --port 8000 --loop app.win_loop:loop_factory
